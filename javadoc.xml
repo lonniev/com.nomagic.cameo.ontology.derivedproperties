@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="private" author="true" classpath="C:\Program Files\Cameo Enterprise Architecture\lib\org.eclipse.emf.ecore_2.7.0.v20110513-1719.jar;C:\Program Files\Cameo Enterprise Architecture\lib\jsr305.jar;C:\Program Files\Cameo Enterprise Architecture\lib\javax_jmi-1_0-fr.jar;C:\Program Files\Cameo Enterprise Architecture\lib\md.jar;C:\Program Files\Cameo Enterprise Architecture\lib\uml2.jar;C:\Program Files\Cameo Enterprise Architecture\lib\md_common_api.jar;C:\Program Files\Cameo Enterprise Architecture\lib\md_api.jar;C:\Program Files\Cameo Enterprise Architecture\lib\md_common.jar;C:\Program Files\Cameo Enterprise Architecture\lib\org.eclipse.emf.common_2.7.0.v20110513-1719.jar;C:\Program Files\Cameo Enterprise Architecture\lib\md_foundation_1.0.jar" destdir="doc" doctitle="Derived Properties Plugin Documentation" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="com.nomagic.cameo.ontology.derivedproperties.skosdefinition,com.nomagic.cameo.ontology.derivedproperties" source="1.7" sourcepath="src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>

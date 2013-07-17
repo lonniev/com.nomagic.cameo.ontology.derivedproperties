@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/md_api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/md_common.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/md_common_api.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/md.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/uml2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/jsr305.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/md_foundation_1.0.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/org.eclipse.emf.ecore_2.7.0.v20110513-1719.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/org.eclipse.emf.common_2.7.0.v20110513-1719.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Cameo Enterprise Architecture/lib/javax_jmi-1_0-fr.jar"/>
+	<classpathentry kind="lib" path="lib/guava-14.0.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
