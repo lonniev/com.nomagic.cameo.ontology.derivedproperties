@@ -1,73 +1,75 @@
 <project name="Cameo Ontology Derived Properties Plugin" default="all" basedir=".">
 
-	<!-- set global properties for this build -->
-	<property name="src" location="src" />
-	<property name="build" location="build" />
-	<property name="dist" location="dist" />
+    <!-- set global properties for this build -->
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="dist" location="dist"/>
 
-	<target name="init">
-		<!-- Create the time stamp -->
-		<tstamp />
-		<!-- Create the build directory structure used by compile -->
-		<mkdir dir="${build}" />
+    <target name="init">
+        <!-- Create the time stamp -->
+        <tstamp/>
+        <!-- Create the build directory structure used by compile -->
+        <mkdir dir="${build}"/>
 
-		<!-- Create the dist directory structure used to stage the plugin files -->
-		<mkdir dir="${dist}/data/resourcemanager" />
-		<mkdir dir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/lib" />
+        <!-- Create the dist directory structure used to stage the plugin files -->
+        <mkdir dir="${dist}/data/resourcemanager"/>
+        <mkdir dir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/lib"/>
 
-	</target>
+    </target>
 
-	<target name="clean">
-		<delete includeEmptyDirs="true" quiet="true">
-			<fileset dir="${build}" />
-			<fileset dir="${dist}" />
-		</delete>
-	</target>
+    <target name="clean">
+        <delete includeEmptyDirs="true" quiet="true">
+            <fileset dir="${build}"/>
+            <fileset dir="${dist}"/>
+        </delete>
+    </target>
 
-	<target name="compile" depends="init">
+    <target name="compile" depends="init">
 
-		<path id="master-classpath">
+        <path id="master-classpath">
 
-			<fileset dir="C:\Program Files\Cameo Enterprise Architecture\lib">
-				<include name="jsr305.jar" />
-				<include name="md_api.jar" />
-				<include name="md_common.jar" />
-				<include name="md_common_api.jar" />
-				<include name="md_foundation_1.0.jar" />
-				<include name="md.jar" />
-				<include name="org.eclipse.emf.ecore_2.7.0.v20110513-1719.jar" />
-				<include name="org.eclipse.emf.common_2.7.0.v20110513-1719.jar" />
-				<include name="javax_jmi-1_0-fr.jar" />
-				<include name="uml2.jar" />
-			</fileset>
+            <fileset dir="C:\Program Files\Cameo Enterprise Architecture\lib">
+                <include name="jsr305.jar"/>
+                <include name="md_api.jar"/>
+                <include name="md_common.jar"/>
+                <include name="md_common_api.jar"/>
+                <include name="md_foundation_1.0.jar"/>
+                <include name="md.jar"/>
+                <include name="org.eclipse.emf.ecore_2.7.0.v20110513-1719.jar"/>
+                <include name="org.eclipse.emf.common_2.7.0.v20110513-1719.jar"/>
+                <include name="javax_jmi-1_0-fr.jar"/>
+                <include name="uml2.jar"/>
+            </fileset>
 
-			<fileset dir="lib">
-				<include name="*.jar" />
-			</fileset>
+            <fileset dir="lib">
+                <include name="*.jar"/>
+            </fileset>
 
-		</path>
+        </path>
 
-		<javac includeantruntime="false" srcdir="${src}" destdir="${build}">
-			<classpath refid="master-classpath" />
-		</javac>
+        <javac includeantruntime="false" srcdir="${src}" destdir="${build}">
+            <classpath refid="master-classpath"/>
+        </javac>
 
-	</target>
+    </target>
 
-	<target name="dist">
+    <target name="dist" depends="compile">
 
-		<jar destfile="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/derivedproperties.jar" basedir="${build}" whenmanifestonly="fail" />
+        <jar destfile="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/derivedproperties.jar"
+             basedir="${build}" whenmanifestonly="fail"/>
 
-		<copy file="${src}/plugin.xml" todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties" />
-		<copy file="${src}/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml" todir="${dist}/data/resourcemanager" />
+        <copy file="${src}/plugin.xml" todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties"/>
+        <copy file="${src}/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml"
+              todir="${dist}/data/resourcemanager"/>
 
-		<copy todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/lib">
-			<fileset dir="lib" />
-		</copy>
+        <copy todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/lib">
+            <fileset dir="lib"/>
+        </copy>
 
-		<zip destfile="derivedproperties-plugin.zip" basedir="${dist}" />
+        <zip destfile="derivedproperties-plugin.zip" basedir="${dist}"/>
 
-	</target>
+    </target>
 
-	<target name="all" depends="compile,dist" />
+    <target name="all" depends="dist"/>
 
 </project>
