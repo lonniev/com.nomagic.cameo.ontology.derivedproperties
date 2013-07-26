@@ -11,28 +11,32 @@ package com.nomagic.cameo.ontology.derivedproperties;
 import com.nomagic.magicdraw.evaluation.EvaluationConfigurator;
 import com.nomagic.magicdraw.plugins.Plugin;
 
+import javax.swing.*;
+
 /**
  * This plugin registers the classes for the Derived Properties of Ontology modeling.
  *
- * @author
+ * @author Lonnie VanZandt
  */
 public class DerivedPropertiesPlugin extends Plugin
 {
     @Override
-	public boolean isSupported()
+    public boolean isSupported()
     {
         return true;
     }
-    
+
     @Override
-	public void init()
+    public void init()
     {
-    	// Called only after isSupported when isSupported returns true  	
+        // Called only after isSupported when isSupported returns true
         EvaluationConfigurator.getInstance().registerBinaryImplementers(DerivedPropertiesPlugin.class.getClassLoader());
+
+        JOptionPane.showMessageDialog(null, "Derived Properties Ontology Plugin. Compiled at @@@compile-timestamp@@@ (debug=@@@debug-flag@@@).");
     }
 
     @Override
-	public boolean close()
+    public boolean close()
     {
         return true;
     }

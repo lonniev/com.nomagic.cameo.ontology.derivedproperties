@@ -5,13 +5,13 @@
         description="No Magic's Ontology Derived Properties Plugin 1, Provider Name: Lonnie VanZandt."
         group="Ontology Capabilities"
         homePage="www.nomagic.com"
-        id="77909" mdVersionMax="higher" mdVersionMin="17.0.2"
+        id="77909" mdVersionMax="higher" mdVersionMin="17.0.3"
         name="Ontology Derived Properties"
         product="comnomagiccameoontologyderivedproperties"
         restartMagicdraw="false"
         type="Plugin">
 
-    <version human="1" internal="1" resource="10"/>
+    <version human="17.0.3-@@@timestamp@@@" internal="17.0.3-@@@timestamp@@@" resource="10"/>
     <provider email="lvanzandt@nomagic.com" homePage="www.nomagic.com" name="Lonnie VanZandt"/>
     <edition>Enterprise</edition>
     <installation>
