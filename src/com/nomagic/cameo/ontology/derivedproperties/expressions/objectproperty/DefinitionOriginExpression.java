@@ -14,6 +14,7 @@ import com.nomagic.cameo.ontology.derivedproperties.expressions.FactPredicateByN
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.impl.PropertyNames;
@@ -36,19 +37,19 @@ public class DefinitionOriginExpression implements Expression,
 
     /**
      * Returns empty collection if the specified object is not an OWL class. If
-     * specified object is an OWL class then returns the set of SKOS Definitions
+     * specified object is an OWL class then returns the set of DefinitionOrigin annotations
      * for that OWL Class.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related SKOS Definition InstanceSpecifications.
+     * @return collection of related DefinitionOrigin InstanceSpecifications.
      */
     @Override
     public Object getValue(@CheckForNull RefObject object)
     {
 
-        if (object instanceof Class) {
+        if (object instanceof Association) {
 
-            Class objectProperty = (Class) object;
+            Association objectProperty = (Association) object;
 
             FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(objectProperty);
 

@@ -18,21 +18,20 @@ import java.util.Map;
 
 
 /**
- * Created with IntelliJ IDEA.
  * User: lvanzandt
  * Date: 7/24/13
  * Time: 8:59 AM
- * To change this template use File | Settings | File Templates.
  */
 public class PropertyRangeExpression implements Expression,
         SmartListenerConfigurationProvider
 {
     /**
-     * Returns empty collection if the specified object is not an OWL objectProperty. If
-     * specified object is an OWL objectProperty then returns the set of owlRestriction cardinalities.
+     * Returns an empty collection if the specified object is not an OWL objectProperty Association. If
+     * the specified object is an OWL objectProperty then it returns the set of Types in the Range of
+     * the objectProperty.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related OWL Restriction cardinalities.
+     * @return collection of [0..1] related OWL Class Types of the Range.
      */
     @Override
     public Object getValue(@CheckForNull RefObject object)
@@ -46,10 +45,16 @@ public class PropertyRangeExpression implements Expression,
             // get the set of roles (MemberEnds) of this Association(Class)
             ImmutableList<Property> assocProperties = ImmutableList.copyOf(objectProperty.getMemberEnd());
 
+            // a well-formed UML and ODM-compliant model should return a collection with only 2 members
+
             for (Property assocProperty : assocProperties) {
 
                 // if the property can be reached from this objectProperty
                 if (assocProperty.isNavigable()) {
+
+                    // according to the ODM Specification, version 1, if the property is
+                    // navigable from the owner then it references the range of the objectProperty
+                    // (otherwise it references the domain thereof)
 
                     // then obtain its Type because that is the range of the objectProperty
                     Type rangeType = assocProperty.getType();

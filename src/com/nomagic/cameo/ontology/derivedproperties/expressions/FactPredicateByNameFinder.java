@@ -5,7 +5,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.DirectedRelationship;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.InstanceSpecification;
@@ -15,11 +15,11 @@ import java.util.List;
 
 public class FactPredicateByNameFinder
 {
-    private final Class contextClass;
+    private final Association contextAssociation;
 
-    public FactPredicateByNameFinder(@CheckForNull Class contextClass)
+    public FactPredicateByNameFinder(@CheckForNull Association contextAssociation)
     {
-        this.contextClass = contextClass;
+        this.contextAssociation = contextAssociation;
     }
 
     public static Predicate<DirectedRelationship> hasNameOf(final String name)
@@ -35,7 +35,7 @@ public class FactPredicateByNameFinder
 
     /**
      * finds the set of InstanceSpecifications with name equal to the key for the
-     * context Class (range is OwlClass, ObjectProperty).
+     * context Association (range is OwlClass, ObjectProperty).
      *
      * @param key the name of the InstanceSpecifications sought.
      * @return collection of related InstanceSpecifications.
@@ -49,7 +49,7 @@ public class FactPredicateByNameFinder
         // find the relationships for the context Class
 
         ImmutableList<DirectedRelationship> fromRelations = ImmutableList
-                .copyOf(contextClass.get_directedRelationshipOfSource());
+                .copyOf(contextAssociation.get_directedRelationshipOfSource());
 
         // select only those that have the name "fact"
         ImmutableList<DirectedRelationship> factRelations = ImmutableList

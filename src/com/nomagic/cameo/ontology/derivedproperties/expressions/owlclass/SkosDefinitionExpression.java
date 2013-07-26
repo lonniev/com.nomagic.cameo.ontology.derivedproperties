@@ -14,7 +14,7 @@ import com.nomagic.cameo.ontology.derivedproperties.expressions.FactPredicateByN
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.impl.PropertyNames;
 
@@ -46,9 +46,9 @@ public class SkosDefinitionExpression implements Expression,
     public Object getValue(@CheckForNull RefObject object)
     {
 
-        if (object instanceof com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class) {
+        if (object instanceof Association) {
 
-            Class owlClass = (Class) object;
+            Association owlClass = (Association) object;
 
             FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlClass);
 
