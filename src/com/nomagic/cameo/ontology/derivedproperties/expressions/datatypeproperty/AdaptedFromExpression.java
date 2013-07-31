@@ -6,7 +6,7 @@
  *
  * Copyright (c) 2013 NoMagic, Inc. All Rights Reserved.
  */
-package com.nomagic.cameo.ontology.derivedproperties.expressions.objectproperty;
+package com.nomagic.cameo.ontology.derivedproperties.expressions.datatypeproperty;
 
 import com.google.common.collect.Lists;
 import com.nomagic.cameo.ontology.derivedproperties.expressions.FactPredicateByNameFinder;
@@ -24,35 +24,36 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Expression collects and returns a collection of EditorialNote InstanceSpecifications for
- * the OWL ObjectProperty.
+ * Expression collects and returns a collection of AdaptedFrom InstanceSpecifications for
+ * the OWL DatatypeProperty.
  *
  * @author Lonnie VanZandt
  * @version 1.0
  */
-public class TermOriginExpression implements Expression,
+public class AdaptedFromExpression implements Expression,
         SmartListenerConfigurationProvider
 {
+    final String factPredicateName = "adaptedFrom";
 
     /**
-     * Returns empty collection if the specified object is not an OWL class. If
-     * specified object is an OWL class then returns the set of TermOrigins
-     * for that OWL Class.
+     * Returns empty collection if the specified object is not an OWL DatatypeProperty Association class.
+     * If the specified object is an OWL DatatypeProperty Association class then it returns the set of
+     * AdaptedFrom annotations for that OWL DatatypeProperty.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related TermOrigin InstanceSpecifications.
+     * @return collection of related AdaptedFrom InstanceSpecifications.
      */
     @Override
     public Object getValue(@CheckForNull RefObject object)
     {
 
-        if (object instanceof Class) {
+        if (object instanceof Association) {
 
-            Association objectProperty = (Association) object;
+            Association DatatypeProperty = (Association) object;
 
-            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder((Class) objectProperty);
+            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder((Class) DatatypeProperty);
 
-            return factPredicateByNameFinder.findInstanceSpecifications("termOrigin");
+            return factPredicateByNameFinder.findInstanceSpecifications(factPredicateName);
         } else {
             return Lists.newArrayList();
         }

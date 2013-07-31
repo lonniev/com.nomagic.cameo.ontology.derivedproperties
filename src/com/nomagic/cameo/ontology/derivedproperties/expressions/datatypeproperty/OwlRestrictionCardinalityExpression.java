@@ -1,4 +1,4 @@
-package com.nomagic.cameo.ontology.derivedproperties.expressions.objectproperty;
+package com.nomagic.cameo.ontology.derivedproperties.expressions.datatypeproperty;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -24,18 +24,18 @@ import java.util.Map;
  * Date: 7/24/13
  * Time: 8:59 AM
  */
-public class OwlRestrictionMinCardinalityExpression implements Expression,
+public class OwlRestrictionCardinalityExpression implements Expression,
         SmartListenerConfigurationProvider
 {
     private final String stereoName = "owlRestriction";
-    private final String propertyName = "minCardinality";
+    private final String propertyName = "cardinality";
 
     /**
-     * Returns empty collection if the specified object is not an OWL objectProperty. If
-     * specified object is an OWL objectProperty then returns the set of owlRestriction cardinalities.
+     * Returns empty collection if the specified object is not an OWL DatatypeProperty. If
+     * specified object is an OWL DatatypeProperty then returns the set of OWL Restrictions.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related OWL Restriction cardinalities.
+     * @return collection of related OWL Restrictions.
      */
     @Override
     public Object getValue(@CheckForNull RefObject object)
@@ -44,10 +44,10 @@ public class OwlRestrictionMinCardinalityExpression implements Expression,
 
         if (object instanceof Class) {
 
-            Class objectProperty = (Class) object;
+            Class DatatypeProperty = (Class) object;
 
             MatchingRelationByNameFinder matchingRelationByNameFinder =
-                    new MatchingRelationByNameFinder(objectProperty);
+                    new MatchingRelationByNameFinder(DatatypeProperty);
 
             ImmutableList<Class> owlRestrictions = ImmutableList
                     .copyOf(matchingRelationByNameFinder.findRelatedClassWithAppliedStereotypeName(stereoName));

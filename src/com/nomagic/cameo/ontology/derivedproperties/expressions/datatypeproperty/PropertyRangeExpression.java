@@ -1,4 +1,4 @@
-package com.nomagic.cameo.ontology.derivedproperties.expressions.objectproperty;
+package com.nomagic.cameo.ontology.derivedproperties.expressions.datatypeproperty;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -26,9 +26,9 @@ public class PropertyRangeExpression implements Expression,
         SmartListenerConfigurationProvider
 {
     /**
-     * Returns an empty collection if the specified object is not an OWL objectProperty Association. If
-     * the specified object is an OWL objectProperty then it returns the set of Types in the Range of
-     * the objectProperty.
+     * Returns an empty collection if the specified object is not an OWL DatatypeProperty Association. If
+     * the specified object is an OWL DatatypeProperty then it returns the set of Types in the Range of
+     * the DatatypeProperty.
      *
      * @param object the context Element from the current MD model.
      * @return collection of [0..1] related OWL Class Types of the Range.
@@ -40,23 +40,23 @@ public class PropertyRangeExpression implements Expression,
 
         if (object instanceof Association) {
 
-            Association objectProperty = (Association) object;
+            Association DatatypeProperty = (Association) object;
 
             // get the set of roles (MemberEnds) of this Association(Class)
-            ImmutableList<Property> assocProperties = ImmutableList.copyOf(objectProperty.getMemberEnd());
+            ImmutableList<Property> assocProperties = ImmutableList.copyOf(DatatypeProperty.getMemberEnd());
 
             // a well-formed UML and ODM-compliant model should return a collection with only 2 members
 
             for (Property assocProperty : assocProperties) {
 
-                // if the property can be reached from this objectProperty
+                // if the property can be reached from this DatatypeProperty
                 if (assocProperty.isNavigable()) {
 
                     // according to the ODM Specification, version 1, if the property is
-                    // navigable from the owner then it references the range of the objectProperty
+                    // navigable from the owner then it references the range of the DatatypeProperty
                     // (otherwise it references the domain thereof)
 
-                    // then obtain its Type because that is the range of the objectProperty
+                    // then obtain its Type because that is the range of the DatatypeProperty
                     Type rangeType = assocProperty.getType();
 
                     values.add(rangeType);

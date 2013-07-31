@@ -51,7 +51,6 @@ public class MatchingRelationByNameFinder
 
         // for each relationship to a matching class
         for (DirectedRelationship matchRel : matchingRelation) {
-
             // the OWL Restriction for the relationship
             values.add((Class) ModelHelper
                     .getClientElement(matchRel));

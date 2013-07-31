@@ -6,11 +6,11 @@
  *
  * Copyright (c) 2013 NoMagic, Inc. All Rights Reserved.
  */
-package com.nomagic.cameo.ontology.derivedproperties.expressions.objectproperty;
+package com.nomagic.cameo.ontology.derivedproperties.expressions.datatypeproperty;
 
 import com.google.common.collect.Lists;
-import com.nomagic.cameo.ontology.derivedproperties.expressions.FactPredicateByNameFinder;
-import com.nomagic.cameo.ontology.derivedproperties.expressions.FactPredicateListenerConfigFactory;
+import com.nomagic.cameo.ontology.derivedproperties.expressions.DependentNamedSupplierListenerConfigFactory;
+import com.nomagic.cameo.ontology.derivedproperties.expressions.MatchingRelationByNameFinder;
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
@@ -24,35 +24,35 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Expression collects and returns a collection of EditorialNote InstanceSpecifications for
- * the OWL ObjectProperty.
+ * Expression collects and returns a collection of OwlRestriction InstanceSpecifications for
+ * the OWL DatatypeProperty.
  *
  * @author Lonnie VanZandt
  * @version 1.0
  */
-public class TermOriginExpression implements Expression,
+public class OwlRestrictionOnPropertyExpression implements Expression,
         SmartListenerConfigurationProvider
 {
+    private final String stereoName = "owlRestriction";
 
     /**
-     * Returns empty collection if the specified object is not an OWL class. If
-     * specified object is an OWL class then returns the set of TermOrigins
-     * for that OWL Class.
+     * Returns empty collection if the specified object is not an OWL DatatypeProperty. If
+     * specified object is an OWL DatatypeProperty then returns the related set of OWL Restrictions.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related TermOrigin InstanceSpecifications.
+     * @return collection of related OWL Restrictions.
      */
     @Override
     public Object getValue(@CheckForNull RefObject object)
     {
 
-        if (object instanceof Class) {
+        if (object instanceof Association) {
 
-            Association objectProperty = (Association) object;
+            Association DatatypeProperty = (Association) object;
 
-            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder((Class) objectProperty);
+            MatchingRelationByNameFinder matchingRelationByNameFinder = new MatchingRelationByNameFinder((Class) DatatypeProperty);
 
-            return factPredicateByNameFinder.findInstanceSpecifications("termOrigin");
+            return matchingRelationByNameFinder.findRelatedClassWithAppliedStereotypeName(stereoName);
         } else {
             return Lists.newArrayList();
         }
@@ -68,6 +68,6 @@ public class TermOriginExpression implements Expression,
     @Override
     public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations()
     {
-        return FactPredicateListenerConfigFactory.getListenerConfigurations();
+        return DependentNamedSupplierListenerConfigFactory.getListenerConfigurations();
     }
 }
