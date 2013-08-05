@@ -117,8 +117,9 @@
         <jar destfile="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/derivedproperties.jar"
              basedir="${build}" whenmanifestonly="fail"/>
 
-        <copy file="${src}/plugin.xml" todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties"/>
-        <copy file="${src}/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml"
+        <copy file="${src}/plugins/com.nomagic.cameo.ontology.derivedproperties/plugin.xml"
+              todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties"/>
+        <copy file="${src}/data/resourcemanager/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml"
               todir="${dist}/data/resourcemanager"/>
 
         <replace preservelastmodified="true"
@@ -138,8 +139,9 @@
         <jar destfile="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/derivedproperties.jar"
              basedir="${build}" whenmanifestonly="fail"/>
 
-        <copy file="${src}/plugin.xml" todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties"/>
-        <copy file="${src}/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml"
+        <copy file="${src}/plugins/com.nomagic.cameo.ontology.derivedproperties/plugin.xml"
+              todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties"/>
+        <copy file="${src}/data/resourcemanager/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml"
               todir="${dist}/data/resourcemanager"/>
 
         <replace preservelastmodified="true"
