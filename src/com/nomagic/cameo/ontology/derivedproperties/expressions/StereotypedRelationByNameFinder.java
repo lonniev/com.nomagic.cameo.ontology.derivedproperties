@@ -20,8 +20,6 @@ public class StereotypedRelationByNameFinder<T extends Classifier>
         this.contextElement = contextElement;
     }
 
-    ;
-
     public static Predicate<DirectedRelationship> hasAppliedStereotypeWithNameOf (final String name)
     {
         return new HasAppliedStereotypeWithNameOf(name);
@@ -36,7 +34,8 @@ public class StereotypedRelationByNameFinder<T extends Classifier>
      * @return collection of stereotyped relationships.
      */
 
-    public List<DirectedRelationship> findRelationshipWithAppliedStereotypeName (String key, RelationshipDirection direction)
+    public List<DirectedRelationship> findRelationshipWithAppliedStereotypeName (String key,
+                                                                                 RelationshipDirection direction)
     {
         List<DirectedRelationship> values = Lists.newArrayList();
 
@@ -54,10 +53,12 @@ public class StereotypedRelationByNameFinder<T extends Classifier>
             towardsRelations = ImmutableList.copyOf(contextElement.get_directedRelationshipOfSource());
         }
 
-        ImmutableList<DirectedRelationship> candidateRelations = new ImmutableList.Builder<DirectedRelationship>().addAll(awayRelations).addAll(towardsRelations).build();
+        ImmutableList<DirectedRelationship> candidateRelations = new ImmutableList.Builder<DirectedRelationship>()
+                .addAll(awayRelations).addAll(towardsRelations).build();
 
         // select only those that have the applied Stereotype <key> name
-        ImmutableList<DirectedRelationship> matchingRelation = ImmutableList.copyOf(Collections2.filter(candidateRelations, hasAppliedStereotypeWithNameOf(key)));
+        ImmutableList<DirectedRelationship> matchingRelation = ImmutableList.copyOf(Collections2.filter
+                (candidateRelations, hasAppliedStereotypeWithNameOf(key)));
 
         values.addAll(matchingRelation);
 

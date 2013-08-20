@@ -38,9 +38,10 @@ public class LabelExpression implements Expression, SmartListenerConfigurationPr
 
         if (object instanceof Association)
         {
-            Association assoc = (Association) object;
+            final Association assoc = (Association) object;
 
-            StereotypedElement<Association> owlProperty = new StereotypedElement<Association>(assoc, "owlProperty");
+            final StereotypedElement<Association> owlProperty = new StereotypedElement<Association>(assoc,
+                    "owlProperty");
 
             values.addAll(owlProperty.getTagValueValueSpecificationByName("label"));
         }

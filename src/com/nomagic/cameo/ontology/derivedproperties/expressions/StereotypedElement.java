@@ -28,11 +28,13 @@ public class StereotypedElement<UnadornedType extends Element>
 
     public List<ValueSpecification> getTagValueValueSpecificationByName (String propertyName)
     {
-        Optional<Property> stereoProperty = Optional.fromNullable(StereotypesHelper.findStereotypePropertyFor(unadornedElement, propertyName));
+        Optional<Property> stereoProperty = Optional.fromNullable(StereotypesHelper.findStereotypePropertyFor
+                (unadornedElement, propertyName));
 
         if (stereoProperty.isPresent())
         {
-            Optional<Slot> slot = Optional.fromNullable(StereotypesHelper.getSlot(unadornedElement, stereoProperty.get(), false));
+            Optional<Slot> slot = Optional.fromNullable(StereotypesHelper.getSlot(unadornedElement,
+                    stereoProperty.get(), false));
 
             if (slot.isPresent())
             {

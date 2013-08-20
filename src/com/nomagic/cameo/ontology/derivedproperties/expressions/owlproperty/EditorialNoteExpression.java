@@ -6,7 +6,7 @@
  *
  * Copyright (c) 2013 NoMagic, Inc. All Rights Reserved.
  */
-package com.nomagic.cameo.ontology.derivedproperties.expressions.datatypeproperty;
+package com.nomagic.cameo.ontology.derivedproperties.expressions.owlproperty;
 
 import com.google.common.collect.Lists;
 import com.nomagic.cameo.ontology.derivedproperties.expressions.FactPredicateByNameFinder;
@@ -15,7 +15,6 @@ import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 
 import javax.annotation.CheckForNull;
@@ -24,37 +23,37 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Expression collects and returns a collection of AdaptedFrom InstanceSpecifications for
- * the OWL DatatypeProperty.
+ * Expression collects and returns a collection of EditorialNote InstanceSpecifications for
+ * the OWL ObjectProperty.
  *
  * @author Lonnie VanZandt
  * @version 1.0
  */
-public class AdaptedFromExpression implements Expression,
-        SmartListenerConfigurationProvider
+public class EditorialNoteExpression implements Expression, SmartListenerConfigurationProvider
 {
-    final String factPredicateName = "adaptedFrom";
 
     /**
-     * Returns empty collection if the specified object is not an OWL DatatypeProperty Association class.
-     * If the specified object is an OWL DatatypeProperty Association class then it returns the set of
-     * AdaptedFrom annotations for that OWL DatatypeProperty.
+     * Returns empty collection if the specified object is not an OWL Property. If
+     * specified object is an OWL Property then returns the set of EditorialNotes
+     * for that OWL Property.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related AdaptedFrom InstanceSpecifications.
+     * @return collection of related EditorialNote InstanceSpecifications.
      */
     @Override
-    public Object getValue(@CheckForNull RefObject object)
+    public Object getValue (@CheckForNull RefObject object)
     {
 
-        if (object instanceof Association) {
+        if (object instanceof com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class)
+        {
 
-            Association DatatypeProperty = (Association) object;
+            final Association owlProperty = (Association) object;
 
-            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder((Class) DatatypeProperty);
+            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlProperty);
 
-            return factPredicateByNameFinder.findInstanceSpecifications(factPredicateName);
-        } else {
+            return factPredicateByNameFinder.findInstanceSpecifications("editorialNote");
+        } else
+        {
             return Lists.newArrayList();
         }
     }
@@ -67,7 +66,7 @@ public class AdaptedFromExpression implements Expression,
      * will be recalculated when one or more of these properties change.
      */
     @Override
-    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations()
+    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
         return FactPredicateListenerConfigFactory.getListenerConfigurations();
     }

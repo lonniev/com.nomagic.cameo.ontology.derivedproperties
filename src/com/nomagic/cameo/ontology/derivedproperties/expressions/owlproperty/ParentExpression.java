@@ -41,7 +41,7 @@ public class ParentExpression implements Expression, SmartListenerConfigurationP
 
         if (object instanceof Association)
         {
-            Association assoc = (Association) object;
+            final Association assoc = (Association) object;
 
             // IF Class THEN
             //  IF subClassOf:range=[null] THEN
@@ -57,7 +57,8 @@ public class ParentExpression implements Expression, SmartListenerConfigurationP
 
             StereotypedRelationByNameFinder<Association> relationFinder = new StereotypedRelationByNameFinder(assoc);
 
-            List<DirectedRelationship> subPropertyOfList = relationFinder.findRelationshipWithAppliedStereotypeName("subPropertyOf", RelationshipDirection.AwayFrom);
+            List<DirectedRelationship> subPropertyOfList = relationFinder.findRelationshipWithAppliedStereotypeName
+                    ("subPropertyOf", RelationshipDirection.AwayFrom);
 
             // collect all the supertype properties of which this property is a subtype
             for (DirectedRelationship subTypeOfRel : subPropertyOfList)
@@ -70,7 +71,8 @@ public class ParentExpression implements Expression, SmartListenerConfigurationP
                     {
                         Association superProp = (Association) target;
 
-                        StereotypedElement<Association> owlProperty = new StereotypedElement<Association>(superProp, "owlProperty");
+                        StereotypedElement<Association> owlProperty = new StereotypedElement<Association>(superProp,
+                                "owlProperty");
 
                         values.addAll(owlProperty.getTagValueValueSpecificationByName("label"));
                     }

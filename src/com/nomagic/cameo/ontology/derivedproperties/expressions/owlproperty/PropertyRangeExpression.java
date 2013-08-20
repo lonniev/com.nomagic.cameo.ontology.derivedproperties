@@ -1,4 +1,4 @@
-package com.nomagic.cameo.ontology.derivedproperties.expressions.objectproperty;
+package com.nomagic.cameo.ontology.derivedproperties.expressions.owlproperty;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -22,41 +22,43 @@ import java.util.Map;
  * Date: 7/24/13
  * Time: 8:59 AM
  */
-public class PropertyRangeExpression implements Expression,
-        SmartListenerConfigurationProvider
+public class PropertyRangeExpression implements Expression, SmartListenerConfigurationProvider
 {
     /**
-     * Returns an empty collection if the specified object is not an OWL objectProperty Association. If
-     * the specified object is an OWL objectProperty then it returns the set of Types in the Range of
-     * the objectProperty.
+     * Returns an empty collection if the specified object is not an OWL Property Association. If
+     * the specified object is an OWL Property then it returns the set of Types in the Range of
+     * the Property.
      *
      * @param object the context Element from the current MD model.
      * @return collection of [0..1] related OWL Class Types of the Range.
      */
     @Override
-    public Object getValue(@CheckForNull RefObject object)
+    public Object getValue (@CheckForNull RefObject object)
     {
         List<Type> values = Lists.newArrayList();
 
-        if (object instanceof Association) {
+        if (object instanceof Association)
+        {
 
-            Association objectProperty = (Association) object;
+            final Association owlProperty = (Association) object;
 
             // get the set of roles (MemberEnds) of this Association(Class)
-            ImmutableList<Property> assocProperties = ImmutableList.copyOf(objectProperty.getMemberEnd());
+            ImmutableList<Property> assocProperties = ImmutableList.copyOf(owlProperty.getMemberEnd());
 
             // a well-formed UML and ODM-compliant model should return a collection with only 2 members
 
-            for (Property assocProperty : assocProperties) {
+            for (Property assocProperty : assocProperties)
+            {
 
-                // if the property can be reached from this objectProperty
-                if (assocProperty.isNavigable()) {
+                // if the property can be reached from this owlProperty
+                if (assocProperty.isNavigable())
+                {
 
                     // according to the ODM Specification, version 1, if the property is
-                    // navigable from the owner then it references the range of the objectProperty
+                    // navigable from the owner then it references the range of the owlProperty
                     // (otherwise it references the domain thereof)
 
-                    // then obtain its Type because that is the range of the objectProperty
+                    // then obtain its Type because that is the range of the owlProperty
                     Type rangeType = assocProperty.getType();
 
                     values.add(rangeType);
@@ -75,10 +77,9 @@ public class PropertyRangeExpression implements Expression,
      * will be recalculated when one or more of these properties change.
      */
     @Override
-    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations()
+    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
-        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs =
-                Maps.newHashMap();
+        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs = Maps.newHashMap();
 
         Collection<SmartListenerConfig> listeners = Lists.newArrayList();
         SmartListenerConfig smartListenerCfg = new SmartListenerConfig();
@@ -88,9 +89,7 @@ public class PropertyRangeExpression implements Expression,
 
         listeners.add(smartListenerCfg);
 
-        configs.put(
-                Class.class,
-                listeners);
+        configs.put(Class.class, listeners);
 
         return configs;
     }

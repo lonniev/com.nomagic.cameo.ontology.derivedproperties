@@ -6,7 +6,7 @@
  *
  * Copyright (c) 2013 NoMagic, Inc. All Rights Reserved.
  */
-package com.nomagic.cameo.ontology.derivedproperties.expressions.objectproperty;
+package com.nomagic.cameo.ontology.derivedproperties.expressions.owlproperty;
 
 import com.google.common.collect.Lists;
 import com.nomagic.cameo.ontology.derivedproperties.expressions.DependentNamedSupplierListenerConfigFactory;
@@ -15,7 +15,6 @@ import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 
 import javax.annotation.CheckForNull;
@@ -30,30 +29,31 @@ import java.util.Map;
  * @author Lonnie VanZandt
  * @version 1.0
  */
-public class OwlRestrictionOnPropertyExpression implements Expression,
-        SmartListenerConfigurationProvider
+public class OwlRestrictionOnPropertyExpression implements Expression, SmartListenerConfigurationProvider
 {
     private final String stereoName = "owlRestriction";
 
     /**
-     * Returns empty collection if the specified object is not an OWL objectProperty. If
-     * specified object is an OWL objectProperty then returns the related set of OWL Restrictions.
+     * Returns empty collection if the specified object is not an OWL Property. If
+     * specified object is an OWL Property then returns the related set of OWL Restrictions.
      *
      * @param object the context Element from the current MD model.
      * @return collection of related OWL Restrictions.
      */
     @Override
-    public Object getValue(@CheckForNull RefObject object)
+    public Object getValue (@CheckForNull RefObject object)
     {
 
-        if (object instanceof Association) {
+        if (object instanceof Association)
+        {
 
-            Association objectProperty = (Association) object;
+            final Association owlProperty = (Association) object;
 
-            MatchingRelationByNameFinder matchingRelationByNameFinder = new MatchingRelationByNameFinder((Class) objectProperty);
+            MatchingRelationByNameFinder matchingRelationByNameFinder = new MatchingRelationByNameFinder(owlProperty);
 
             return matchingRelationByNameFinder.findRelatedClassWithAppliedStereotypeName(stereoName);
-        } else {
+        } else
+        {
             return Lists.newArrayList();
         }
     }
@@ -66,7 +66,7 @@ public class OwlRestrictionOnPropertyExpression implements Expression,
      * will be recalculated when one or more of these properties change.
      */
     @Override
-    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations()
+    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
         return DependentNamedSupplierListenerConfigFactory.getListenerConfigurations();
     }

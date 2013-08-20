@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import com.nomagic.uml2.ext.jmi.helpers.ModelHelper;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Classifier;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.DirectedRelationship;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 
@@ -15,15 +16,14 @@ import java.util.List;
 
 public class MatchingRelationByNameFinder
 {
-    private final Class contextClass;
+    private final Classifier contextClassifier;
 
-    public MatchingRelationByNameFinder(@CheckForNull Class contextClass)
+    public MatchingRelationByNameFinder (@CheckForNull Classifier contextClassifier)
     {
-        this.contextClass = contextClass;
+        this.contextClassifier = contextClassifier;
     }
 
-    public static Predicate<DirectedRelationship> hasAppliedStereotypeWithNameOf(
-            final String name)
+    public static Predicate<DirectedRelationship> hasAppliedStereotypeWithNameOf (final String name)
     {
         return new HasAppliedStereotypeWithNameOf(name);
     }
@@ -35,41 +35,39 @@ public class MatchingRelationByNameFinder
      * @return collection of related OWL Restrictions.
      */
 
-    public List<Class> findRelatedClassWithAppliedStereotypeName(String key)
+    public List<Class> findRelatedClassWithAppliedStereotypeName (String key)
     {
         List<Class> values = Lists.newArrayList();
 
         // find the relationships for the context Class
 
-        ImmutableList<DirectedRelationship> fromRelations = ImmutableList
-                .copyOf(contextClass.get_directedRelationshipOfTarget());
+        ImmutableList<DirectedRelationship> fromRelations = ImmutableList.copyOf(contextClassifier
+                .get_directedRelationshipOfTarget());
 
         // select only those that have the applied Stereotype <key> name
-        ImmutableList<DirectedRelationship> matchingRelation = ImmutableList
-                .copyOf(Collections2.filter(fromRelations,
-                        hasAppliedStereotypeWithNameOf(key)));
+        ImmutableList<DirectedRelationship> matchingRelation = ImmutableList.copyOf(Collections2.filter
+                (fromRelations, hasAppliedStereotypeWithNameOf(key)));
 
         // for each relationship to a matching class
-        for (DirectedRelationship matchRel : matchingRelation) {
+        for (DirectedRelationship matchRel : matchingRelation)
+        {
             // the OWL Restriction for the relationship
-            values.add((Class) ModelHelper
-                    .getClientElement(matchRel));
+            values.add((Class) ModelHelper.getClientElement(matchRel));
         }
 
         return values;
     }
 
-    private static class HasAppliedStereotypeWithNameOf implements
-            Predicate<DirectedRelationship>
+    private static class HasAppliedStereotypeWithNameOf implements Predicate<DirectedRelationship>
     {
         private final String name;
 
-        private HasAppliedStereotypeWithNameOf(final String name)
+        private HasAppliedStereotypeWithNameOf (final String name)
         {
             this.name = name;
         }
 
-        public boolean apply(final DirectedRelationship dr)
+        public boolean apply (final DirectedRelationship dr)
         {
             Element client = ModelHelper.getClientElement(dr);
 

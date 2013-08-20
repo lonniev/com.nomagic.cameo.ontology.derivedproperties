@@ -1,4 +1,4 @@
-package com.nomagic.cameo.ontology.derivedproperties.expressions.datatypeproperty;
+package com.nomagic.cameo.ontology.derivedproperties.expressions.owlproperty;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
@@ -22,44 +22,47 @@ import java.util.Map;
  * Date: 7/24/13
  * Time: 8:59 AM
  */
-public class PropertyRangeExpression implements Expression,
-        SmartListenerConfigurationProvider
+public class PropertyDomainExpression implements Expression, SmartListenerConfigurationProvider
 {
     /**
-     * Returns an empty collection if the specified object is not an OWL DatatypeProperty Association. If
-     * the specified object is an OWL DatatypeProperty then it returns the set of Types in the Range of
-     * the DatatypeProperty.
+     * Returns an empty collection if the specified object is not an OWL Property Association. If
+     * the specified object is an OWL Property then it returns the set of Types in the Domain of
+     * the Property.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of [0..1] related OWL Class Types of the Range.
+     * @return collection of [0..1] related OWL Class Types of the Domain.
      */
     @Override
-    public Object getValue(@CheckForNull RefObject object)
+    public Object getValue (@CheckForNull RefObject object)
     {
         List<Type> values = Lists.newArrayList();
 
-        if (object instanceof Association) {
+        if (object instanceof Association)
+        {
 
-            Association DatatypeProperty = (Association) object;
+            final Association owlProperty = (Association) object;
 
             // get the set of roles (MemberEnds) of this Association(Class)
-            ImmutableList<Property> assocProperties = ImmutableList.copyOf(DatatypeProperty.getMemberEnd());
+            ImmutableList<Property> assocProperties = ImmutableList.copyOf(owlProperty.getMemberEnd());
 
             // a well-formed UML and ODM-compliant model should return a collection with only 2 members
 
-            for (Property assocProperty : assocProperties) {
+            // look at each of the (two) properties
+            for (Property assocProperty : assocProperties)
+            {
 
-                // if the property can be reached from this DatatypeProperty
-                if (assocProperty.isNavigable()) {
+                // according to the ODM Specification, version 1, if the property is
+                // not navigable from the owner then it references the domain of the owlProperty
+                // (otherwise it references the range thereof)
 
-                    // according to the ODM Specification, version 1, if the property is
-                    // navigable from the owner then it references the range of the DatatypeProperty
-                    // (otherwise it references the domain thereof)
+                // if the property cannot be reached from this owlProperty
+                if (!assocProperty.isNavigable())
+                {
 
-                    // then obtain its Type because that is the range of the DatatypeProperty
-                    Type rangeType = assocProperty.getType();
+                    // then obtain its Type because that is the domain of the owlProperty
+                    Type domainType = assocProperty.getType();
 
-                    values.add(rangeType);
+                    values.add(domainType);
                 }
             }
         }
@@ -75,10 +78,9 @@ public class PropertyRangeExpression implements Expression,
      * will be recalculated when one or more of these properties change.
      */
     @Override
-    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations()
+    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
-        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs =
-                Maps.newHashMap();
+        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs = Maps.newHashMap();
 
         Collection<SmartListenerConfig> listeners = Lists.newArrayList();
         SmartListenerConfig smartListenerCfg = new SmartListenerConfig();
@@ -88,9 +90,7 @@ public class PropertyRangeExpression implements Expression,
 
         listeners.add(smartListenerCfg);
 
-        configs.put(
-                Class.class,
-                listeners);
+        configs.put(Class.class, listeners);
 
         return configs;
     }

@@ -6,7 +6,7 @@
  *
  * Copyright (c) 2013 NoMagic, Inc. All Rights Reserved.
  */
-package com.nomagic.cameo.ontology.derivedproperties.expressions.datatypeproperty;
+package com.nomagic.cameo.ontology.derivedproperties.expressions.owlproperty;
 
 import com.google.common.collect.Lists;
 import com.nomagic.cameo.ontology.derivedproperties.expressions.FactPredicateByNameFinder;
@@ -15,7 +15,6 @@ import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 
 import javax.annotation.CheckForNull;
@@ -24,36 +23,34 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Expression collects and returns a collection of EditorialNote InstanceSpecifications for
- * the OWL DatatypeProperty.
+ * Expression collects and returns a collection of SKOS Definition Strings for
+ * the OWL Property.
  *
  * @author Lonnie VanZandt
  * @version 1.0
  */
-public class TermOriginExpression implements Expression,
-        SmartListenerConfigurationProvider
+public class SkosDefinitionExpression implements Expression, SmartListenerConfigurationProvider
 {
-
     /**
-     * Returns empty collection if the specified object is not an OWL class. If
-     * specified object is an OWL class then returns the set of TermOrigins
-     * for that OWL Class.
+     * Returns empty collection if the specified object is not an OWL Property. If
+     * specified object is an OWL Property then returns the set of SKOS Definitions
+     * for that OWL Property.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related TermOrigin InstanceSpecifications.
+     * @return collection of related SKOS Definition InstanceSpecifications.
      */
     @Override
-    public Object getValue(@CheckForNull RefObject object)
+    public Object getValue (@CheckForNull RefObject object)
     {
+        if (object instanceof Association)
+        {
+            final Association owlProperty = (Association) object;
 
-        if (object instanceof Class) {
+            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlProperty);
 
-            Association DatatypeProperty = (Association) object;
-
-            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder((Class) DatatypeProperty);
-
-            return factPredicateByNameFinder.findInstanceSpecifications("termOrigin");
-        } else {
+            return factPredicateByNameFinder.findInstanceSpecifications("definition");
+        } else
+        {
             return Lists.newArrayList();
         }
     }
@@ -66,7 +63,7 @@ public class TermOriginExpression implements Expression,
      * will be recalculated when one or more of these properties change.
      */
     @Override
-    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations()
+    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
         return FactPredicateListenerConfigFactory.getListenerConfigurations();
     }

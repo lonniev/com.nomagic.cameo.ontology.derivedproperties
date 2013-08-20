@@ -30,8 +30,7 @@ import java.util.Map;
  * @author Lonnie VanZandt
  * @version 1.0
  */
-public class SkosDefinitionExpression implements Expression,
-        SmartListenerConfigurationProvider
+public class SkosDefinitionExpression implements Expression, SmartListenerConfigurationProvider
 {
 
     /**
@@ -43,17 +42,19 @@ public class SkosDefinitionExpression implements Expression,
      * @return collection of related SKOS Definition InstanceSpecifications.
      */
     @Override
-    public Object getValue(@CheckForNull RefObject object)
+    public Object getValue (@CheckForNull RefObject object)
     {
 
-        if (object instanceof Class) {
+        if (object instanceof Class)
+        {
 
-            Class owlClass = (Class) object;
+            final Class owlClass = (Class) object;
 
             FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlClass);
 
             return factPredicateByNameFinder.findInstanceSpecifications("definition");
-        } else {
+        } else
+        {
             return Lists.newArrayList();
         }
     }
@@ -66,58 +67,47 @@ public class SkosDefinitionExpression implements Expression,
      * will be recalculated when one or more of these properties change.
      */
     @Override
-    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations()
+    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
 
-        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs =
-                Maps.newHashMap();
+        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs = Maps.newHashMap();
 
         Collection<SmartListenerConfig> listeners = Lists.newArrayList();
         SmartListenerConfig smartListenerCfg = new SmartListenerConfig();
 
         // if the supplier at the end of the fact-dependency, predicate-dependency changes its name
-        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY)
-                .listenTo(PropertyNames.CLIENT_DEPENDENCY)
-                .listenTo(PropertyNames.SUPPLIER)
-                .listenTo(PropertyNames.NAME);
+        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY).listenTo(PropertyNames.CLIENT_DEPENDENCY)
+                .listenTo(PropertyNames.SUPPLIER).listenTo(PropertyNames.NAME);
 
         listeners.add(smartListenerCfg);
 
         // if the supplier at the end of the fact-dependency, predicate-dependency changes its type
-        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY)
-                .listenTo(PropertyNames.CLIENT_DEPENDENCY)
-                .listenTo(PropertyNames.SUPPLIER)
-                .listenTo(PropertyNames.TYPE);
+        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY).listenTo(PropertyNames.CLIENT_DEPENDENCY)
+                .listenTo(PropertyNames.SUPPLIER).listenTo(PropertyNames.TYPE);
 
         listeners.add(smartListenerCfg);
 
         // if the supplier at the end of the fact-dependency changes its Specification
-        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY)
-                .listenTo(PropertyNames.CLIENT_DEPENDENCY)
-                .listenTo(PropertyNames.SUPPLIER)
-                .listenTo(PropertyNames.SPECIFICATION);
+        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY).listenTo(PropertyNames.CLIENT_DEPENDENCY)
+                .listenTo(PropertyNames.SUPPLIER).listenTo(PropertyNames.SPECIFICATION);
 
         listeners.add(smartListenerCfg);
 
         // if the client dependency at the end of the fact-dependency changes its name
-        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY)
-                .listenTo(PropertyNames.CLIENT_DEPENDENCY)
+        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY).listenTo(PropertyNames.CLIENT_DEPENDENCY)
                 .listenTo(PropertyNames.NAME);
 
         listeners.add(smartListenerCfg);
 
         // if the client dependency changes its name
-        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY)
-                .listenTo(PropertyNames.NAME);
+        smartListenerCfg.listenToNested(PropertyNames.CLIENT_DEPENDENCY).listenTo(PropertyNames.NAME);
 
         // if the set of client dependencies changes
         smartListenerCfg.listenTo(PropertyNames.CLIENT_DEPENDENCY);
 
         listeners.add(smartListenerCfg);
 
-        configs.put(
-                com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class.class,
-                listeners);
+        configs.put(com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class.class, listeners);
 
         return configs;
     }
