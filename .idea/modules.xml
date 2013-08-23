@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/com.nomagic.cameo.ontology.derivedproperties.iml" filepath="$PROJECT_DIR$/com.nomagic.cameo.ontology.derivedproperties.iml" />
+      <module fileurl="file://$PROJECT_DIR$/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.iml" filepath="$PROJECT_DIR$/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.iml" />
     </modules>
   </component>
 </project>
