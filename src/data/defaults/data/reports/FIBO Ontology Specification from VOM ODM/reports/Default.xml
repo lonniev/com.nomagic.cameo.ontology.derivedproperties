@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+    <name>Default</name>
+    <description>Default report data.</description>
+    <defaultReport>true</defaultReport>
+    <variables>
+        <variable>
+            <name>Architecture</name>
+            <value></value>
+        </variable>
+        <variable>
+            <name>Author</name>
+            <value></value>
+        </variable>
+        <variable>
+            <name>Company</name>
+            <value></value>
+        </variable>
+        <variable>
+            <name>Description</name>
+            <value>Initial version created</value>
+        </variable>
+        <variable>
+            <name>Revision</name>
+            <value>0</value>
+        </variable>
+        <variable>
+            <name>Scope</name>
+            <value></value>
+        </variable>
+        <variable>
+            <name>Title</name>
+            <value>FIBO Ontology Report</value>
+        </variable>
+    </variables>
+    <outputProperty>
+        <outputFile/>
+        <outputImageFormat>png</outputImageFormat>
+        <outputFitImageSize>1</outputFitImageSize>
+        <outputOnBlankField/>
+        <displayInViewer>true</displayInViewer>
+        <outputFormat/>
+        <uploadProfile/>
+    </outputProperty>
+</report>
