@@ -20,6 +20,8 @@
 
         <!-- Create the dist directory structure used to stage the plugin files -->
         <mkdir dir="${dist}/data/resourcemanager"/>
+        <mkdir dir="${dist}/data/defaults/data/reports"/>
+
         <mkdir dir="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/lib"/>
 
     </target>
@@ -135,6 +137,8 @@
         <copy file="${src}/data/defaults/data/diagrams/OWL Business Diagram/descriptor.xml"
               todir="${dist}/data/defaults/data/diagrams/OWL Business Diagram"/>
 
+        <copydir src="${src}/data/defaults/data/reports" dest="${dist}/data/defaults/data/reports"/>
+
         <zip destfile="derivedproperties-plugin.zip" basedir="${dist}"/>
 
     </target>
@@ -159,6 +163,8 @@
 
         <copy file="${src}/data/defaults/data/diagrams/OWL Business Diagram/descriptor.xml"
               todir="${dist}/data/defaults/data/diagrams/OWL Business Diagram"/>
+
+        <copydir src="${src}/data/defaults/data/reports" dest="${dist}/data/defaults/data/reports"/>
 
         <zip destfile="derivedproperties-plugin.zip" basedir="${dist}"/>
 

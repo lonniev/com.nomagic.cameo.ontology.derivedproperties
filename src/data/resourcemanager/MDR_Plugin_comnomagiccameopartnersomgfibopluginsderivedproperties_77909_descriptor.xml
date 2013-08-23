@@ -17,6 +17,14 @@
     <installation>
         <file from="data/defaults/data/diagrams/OWL Business Diagram/descriptor.xml"
               to="data/defaults/data/diagrams/OWL Business Diagram/descriptor.xml"/>
+
+        <file from="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/reports/Default.xml"
+              to="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/reports/Default.xml"/>
+        <file from="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/template.xml"
+              to="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/template.xml"/>
+        <file from="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/FIBO Ontology Report Generator.docx"
+              to="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/FIBO Ontology Report Generator.docx"/>
+
         <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"
               to="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"/>
         <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/lib/guava-14.0.1.jar"
