@@ -9,8 +9,8 @@
 package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.owlclass;
 
 import com.google.common.collect.Lists;
-import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.FactPredicateByNameFinder;
-import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.FactPredicateListenerConfigFactory;
+import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.DependentNamedSupplierListenerConfigFactory;
+import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.MatchingRelationByNameFinder;
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
@@ -23,32 +23,35 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Expression collects and returns a collection of SKOS Definition Strings for
- * the OWL Class.
+ * Expression collects and returns a collection of OwlRestriction InstanceSpecifications for
+ * the OWL ObjectProperty.
  *
  * @author Lonnie VanZandt
  * @version 1.0
  */
-public class SkosDefinitionExpression implements Expression, SmartListenerConfigurationProvider
+public class OwlRestrictionOnPropertyExpression implements Expression, SmartListenerConfigurationProvider
 {
+    private final String stereoName = "owlRestriction";
+
     /**
      * Returns empty collection if the specified object is not an OWL Class. If
-     * specified object is an OWL Class then returns the set of SKOS Definitions
-     * for that OWL Class.
+     * specified object is an OWL Class then returns the related set of OWL Restrictions.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related SKOS Definition InstanceSpecifications.
+     * @return collection of related OWL Restrictions.
      */
     @Override
     public Object getValue (@CheckForNull RefObject object)
     {
+
         if (object instanceof Class)
         {
+
             final Class owlProperty = (Class) object;
 
-            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlProperty);
+            MatchingRelationByNameFinder matchingRelationByNameFinder = new MatchingRelationByNameFinder(owlProperty);
 
-            return factPredicateByNameFinder.findInstanceSpecifications("definition");
+            return matchingRelationByNameFinder.findRelatedClassWithAppliedStereotypeName(stereoName);
         } else
         {
             return Lists.newArrayList();
@@ -65,6 +68,6 @@ public class SkosDefinitionExpression implements Expression, SmartListenerConfig
     @Override
     public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
-        return FactPredicateListenerConfigFactory.getListenerConfigurations();
+        return DependentNamedSupplierListenerConfigFactory.getListenerConfigurations();
     }
 }

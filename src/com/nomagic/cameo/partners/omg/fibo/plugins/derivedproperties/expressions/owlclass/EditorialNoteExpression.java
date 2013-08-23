@@ -23,32 +23,35 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Expression collects and returns a collection of SKOS Definition Strings for
+ * Expression collects and returns a collection of EditorialNote InstanceSpecifications for
  * the OWL Class.
  *
  * @author Lonnie VanZandt
  * @version 1.0
  */
-public class SkosDefinitionExpression implements Expression, SmartListenerConfigurationProvider
+public class EditorialNoteExpression implements Expression, SmartListenerConfigurationProvider
 {
+
     /**
      * Returns empty collection if the specified object is not an OWL Class. If
-     * specified object is an OWL Class then returns the set of SKOS Definitions
+     * specified object is an OWL Class then returns the set of EditorialNotes
      * for that OWL Class.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related SKOS Definition InstanceSpecifications.
+     * @return collection of related EditorialNote InstanceSpecifications.
      */
     @Override
     public Object getValue (@CheckForNull RefObject object)
     {
-        if (object instanceof Class)
+
+        if (object instanceof com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class)
         {
-            final Class owlProperty = (Class) object;
 
-            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlProperty);
+            final Class owlClass = (Class) object;
 
-            return factPredicateByNameFinder.findInstanceSpecifications("definition");
+            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlClass);
+
+            return factPredicateByNameFinder.findInstanceSpecifications("editorialNote");
         } else
         {
             return Lists.newArrayList();

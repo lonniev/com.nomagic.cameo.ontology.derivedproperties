@@ -23,32 +23,35 @@ import java.util.Collection;
 import java.util.Map;
 
 /**
- * Expression collects and returns a collection of SKOS Definition Strings for
- * the OWL Class.
+ * Expression collects and returns a collection of AdaptedFrom InstanceSpecifications for
+ * the OWL ObjectProperty.
  *
  * @author Lonnie VanZandt
  * @version 1.0
  */
-public class SkosDefinitionExpression implements Expression, SmartListenerConfigurationProvider
+public class AdaptedFromExpression implements Expression, SmartListenerConfigurationProvider
 {
+    final String factPredicateName = "adaptedFrom";
+
     /**
-     * Returns empty collection if the specified object is not an OWL Class. If
-     * specified object is an OWL Class then returns the set of SKOS Definitions
-     * for that OWL Class.
+     * Returns empty collection if the specified object is not an OWL class.
+     * If the specified object is an OWL class then it returns the set of
+     * AdaptedFrom annotations for that OWL Class.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of related SKOS Definition InstanceSpecifications.
+     * @return collection of related AdaptedFrom InstanceSpecifications.
      */
     @Override
     public Object getValue (@CheckForNull RefObject object)
     {
         if (object instanceof Class)
         {
-            final Class owlProperty = (Class) object;
 
-            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlProperty);
+            final Class owlClass = (Class) object;
 
-            return factPredicateByNameFinder.findInstanceSpecifications("definition");
+            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlClass);
+
+            return factPredicateByNameFinder.findInstanceSpecifications(factPredicateName);
         } else
         {
             return Lists.newArrayList();
