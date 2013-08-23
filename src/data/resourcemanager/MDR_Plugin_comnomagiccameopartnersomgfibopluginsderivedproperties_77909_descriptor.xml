@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<resourceDescriptor
+
+        critical="false" date="2013-07-01-06:00"
+        description="OMG FIBO's Derived Properties Plugin 1, Provider Name: Lonnie VanZandt."
+        group="Ontology Capabilities"
+        homePage="www.nomagic.com"
+        id="77909" mdVersionMax="higher" mdVersionMin="17.0.3"
+        name="FIBO Derived Properties"
+        product="comnomagiccameopartnersomgfibopluginsderivedproperties"
+        restartMagicdraw="false"
+        type="Plugin">
+
+    <version human="17.0.4-@@@timestamp@@@" internal="17.0.4-@@@timestamp@@@" resource="10"/>
+    <provider email="lvanzandt@nomagic.com" homePage="www.nomagic.com" name="Lonnie VanZandt"/>
+    <edition>Enterprise</edition>
+    <installation>
+        <file from="data/defaults/data/diagrams/OWL Business Diagram/descriptor.xml"
+              to="data/defaults/data/diagrams/OWL Business Diagram/descriptor.xml"/>
+        <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"
+              to="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"/>
+        <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/lib/guava-14.0.1.jar"
+              to="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/lib/guava-14.0.1.jar"/>
+        <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/plugin.xml"
+              to="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/plugin.xml"/>
+    </installation>
+</resourceDescriptor>
+

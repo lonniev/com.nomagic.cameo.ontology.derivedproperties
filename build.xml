@@ -1,4 +1,4 @@
-<project name="Cameo Ontology Derived Properties Plugin" default="all" basedir=".">
+<project name="FIBO Derived Properties Plugin" default="all" basedir=".">
 
     <!-- set global properties for this build -->
     <property name="src" location="src"/>
@@ -20,7 +20,7 @@
 
         <!-- Create the dist directory structure used to stage the plugin files -->
         <mkdir dir="${dist}/data/resourcemanager"/>
-        <mkdir dir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/lib"/>
+        <mkdir dir="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/lib"/>
 
     </target>
 
@@ -51,17 +51,17 @@
 
         </path>
 
-        <replace file="${src}/com/nomagic/cameo/ontology/derivedproperties/DerivedPropertiesPlugin.java"
+        <replace file="${src}/com/nomagic/cameo/partners/omg/fibo/plugins/derivedproperties/DerivedPropertiesPlugin.java"
                  token="@@@compile-timestamp@@@" value="${DSTAMP}-${TSTAMP}"/>
 
-        <replace file="${src}/com/nomagic/cameo/ontology/derivedproperties/DerivedPropertiesPlugin.java"
+        <replace file="${src}/com/nomagic/cameo/partners/omg/fibo/plugins/derivedproperties/DerivedPropertiesPlugin.java"
                  token="@@@debug-flag@@@" value="disabled"/>
 
         <javac includeantruntime="false" srcdir="${src}" destdir="${build}">
             <classpath refid="master-classpath"/>
         </javac>
 
-        <replaceregexp file="${src}/com/nomagic/cameo/ontology/derivedproperties/DerivedPropertiesPlugin.java"
+        <replaceregexp file="${src}/com/nomagic/cameo/partners/omg/fibo/plugins/derivedproperties/DerivedPropertiesPlugin.java"
                        preservelastmodified="true"
                        match="Compiled at (.*)\."
                        replace="Compiled at @@@compile-timestamp@@@ (debug=@@@debug-flag@@@)\."/>
@@ -95,11 +95,11 @@
 
         </path>
 
-        <replace file="${src}/com/nomagic/cameo/ontology/derivedproperties/DerivedPropertiesPlugin.java"
+        <replace file="${src}/com/nomagic/cameo/partners/omg/fibo/plugins/derivedproperties/DerivedPropertiesPlugin.java"
                  preservelastmodified="true"
                  token="@@@compile-timestamp@@@" value="${DSTAMP}-${TSTAMP}"/>
 
-        <replace file="${src}/com/nomagic/cameo/ontology/derivedproperties/DerivedPropertiesPlugin.java"
+        <replace file="${src}/com/nomagic/cameo/partners/omg/fibo/plugins/derivedproperties/DerivedPropertiesPlugin.java"
                  preservelastmodified="true"
                  token="@@@debug-flag@@@" value="enabled"/>
 
@@ -107,7 +107,7 @@
             <classpath refid="master-classpath"/>
         </javac>
 
-        <replaceregexp file="${src}/com/nomagic/cameo/ontology/derivedproperties/DerivedPropertiesPlugin.java"
+        <replaceregexp file="${src}/com/nomagic/cameo/partners/omg/fibo/plugins/derivedproperties/DerivedPropertiesPlugin.java"
                        preservelastmodified="true"
                        match="Compiled at (.*)\."
                        replace="Compiled at @@@compile-timestamp@@@ (debug=@@@debug-flag@@@)\."/>
@@ -116,19 +116,19 @@
 
     <target name="dist" depends="compile">
 
-        <jar destfile="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/derivedproperties.jar"
+        <jar destfile="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"
              basedir="${build}" whenmanifestonly="fail"/>
 
-        <copy file="${src}/plugins/com.nomagic.cameo.ontology.derivedproperties/plugin.xml"
-              todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties"/>
-        <copy file="${src}/data/resourcemanager/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml"
+        <copy file="${src}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/plugin.xml"
+              todir="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties"/>
+        <copy file="${src}/data/resourcemanager/MDR_Plugin_comnomagiccameopartnersomgfibopluginsderivedproperties_77909_descriptor.xml"
               todir="${dist}/data/resourcemanager"/>
 
         <replace preservelastmodified="true"
                  file="${dist}/data/resourcemanager/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml"
                  token="@@@timestamp@@@" value="${DSTAMP}-${TSTAMP}"/>
 
-        <copy todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/lib">
+        <copy todir="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/lib">
             <fileset dir="lib"/>
         </copy>
 
@@ -141,19 +141,19 @@
 
     <target name="debug-dist" depends="debug-compile">
 
-        <jar destfile="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/derivedproperties.jar"
+        <jar destfile="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"
              basedir="${build}" whenmanifestonly="fail"/>
 
-        <copy file="${src}/plugins/com.nomagic.cameo.ontology.derivedproperties/plugin.xml"
-              todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties"/>
-        <copy file="${src}/data/resourcemanager/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml"
+        <copy file="${src}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/plugin.xml"
+              todir="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties"/>
+        <copy file="${src}/data/resourcemanager/MDR_Plugin_comnomagiccameopartnersomgfibopluginsderivedproperties_77909_descriptor.xml"
               todir="${dist}/data/resourcemanager"/>
 
         <replace preservelastmodified="true"
-                 file="${dist}/data/resourcemanager/MDR_Plugin_comnomagiccameoontologyderivedproperties_77909_descriptor.xml"
+                 file="${dist}/data/resourcemanager/MDR_Plugin_comnomagiccameopartnersomgfibopluginsderivedproperties_77909_descriptor.xml"
                  token="@@@timestamp@@@" value="${DSTAMP}-${TSTAMP}"/>
 
-        <copy todir="${dist}/plugins/com.nomagic.cameo.ontology.derivedproperties/lib">
+        <copy todir="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/lib">
             <fileset dir="lib"/>
         </copy>
 
