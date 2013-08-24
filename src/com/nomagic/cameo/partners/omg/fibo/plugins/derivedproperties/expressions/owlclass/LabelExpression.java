@@ -6,7 +6,7 @@ import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 import com.nomagic.uml2.impl.PropertyNames;
 
@@ -36,12 +36,11 @@ public class LabelExpression implements Expression, SmartListenerConfigurationPr
     {
         List<Object> values = Lists.newArrayList();
 
-        if (object instanceof Association)
+        if (object instanceof Class)
         {
-            final Association assoc = (Association) object;
+            final Class owlClass = (Class) object;
 
-            final StereotypedElement<Association> owlProperty = new StereotypedElement<Association>(assoc,
-                    "owlProperty");
+            final StereotypedElement<Class> owlProperty = new StereotypedElement<Class>(owlClass, "owlClass");
 
             values.addAll(owlProperty.getTagValueValueSpecificationByName("label"));
         }
@@ -57,9 +56,9 @@ public class LabelExpression implements Expression, SmartListenerConfigurationPr
      * will be recalculated when one or more of these properties change.
      */
     @Override
-    public Map<Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
+    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
-        Map<Class<? extends Element>, Collection<SmartListenerConfig>> configs = Maps.newHashMap();
+        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs = Maps.newHashMap();
 
         Collection<SmartListenerConfig> listeners = Lists.newArrayList();
         SmartListenerConfig smartListenerCfg = new SmartListenerConfig();

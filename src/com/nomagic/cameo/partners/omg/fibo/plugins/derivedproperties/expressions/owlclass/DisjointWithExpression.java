@@ -4,7 +4,8 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedElement;
 import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedRelationByNameFinder;
-import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedRelationByNameFinder.RelationshipDirection;
+import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedRelationByNameFinder
+        .RelationshipDirection;
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
@@ -24,15 +25,15 @@ import java.util.Map;
  * Date: 8/19/13
  * Time: 3:56 PM
  */
-public class ParentExpression implements Expression, SmartListenerConfigurationProvider
+public class DisjointWithExpression implements Expression, SmartListenerConfigurationProvider
 {
     /**
      * Returns empty collection if the specified object is not an OWL Class.
      * If the specified object is an OWL Class then it returns a collection
-     * of the rdf Labels of the Parents for the element.
+     * of the rdf Labels of the Disjoint OWL Classes (if any) for the element.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of Parent.
+     * @return collection of Disjoint with Labels.
      */
     @Override
     public Object getValue (@CheckForNull RefObject object)
@@ -43,31 +44,22 @@ public class ParentExpression implements Expression, SmartListenerConfigurationP
         {
             final Class owlClass = (Class) object;
 
-            // IF Class THEN
-            //  IF subClassOf:range=[null] THEN
-            //    "Anything"
-            //  ELSE
-            //    subClassOf:range>rdfs:label)
-            //  ELSE IF objectProperty THEN
-            //    (IF subPropertyOf:range=[null] THEN
-            //      ""
-            //    ELSE
-            //      subClassOf:range>rdfs:label)
-            //  ELSE "
+             StereotypedRelationByNameFinder<Class> relationFinder = new StereotypedRelationByNameFinder(owlClass);
 
-            StereotypedRelationByNameFinder<Class> relationFinder = new StereotypedRelationByNameFinder(owlClass);
+            List<DirectedRelationship> disjointWithRels = relationFinder.findRelationshipWithAppliedStereotypeName
+                    ("disjointWith", RelationshipDirection.Both);
 
-            List<DirectedRelationship> subPropertyOfList = relationFinder.findRelationshipWithAppliedStereotypeName
-                    ("subClassOf", RelationshipDirection.AwayFrom);
-
-            // collect all the supertype classes of which this class is a subtype
-            for (DirectedRelationship subTypeOfRel : subPropertyOfList)
+            // collect all the OWL classes of which this class is disjoint
+            for (DirectedRelationship disjointWithRel : disjointWithRels)
             {
-                for (Element target : subTypeOfRel.getTarget())
+                List<Element> endElements = Lists.newArrayList(disjointWithRel.getTarget());
+                endElements.addAll(disjointWithRel.getSource());
+
+                for (Element endElement : endElements)
                 {
-                    if (target instanceof Class)
+                    if ((endElement instanceof Class) && (endElement != owlClass))
                     {
-                        Class superClass = (Class) target;
+                        Class superClass = (Class) endElement;
 
                         StereotypedElement<Class> owlProperty = new StereotypedElement<Class>(superClass,
                                 "owlClass");
@@ -101,7 +93,7 @@ public class ParentExpression implements Expression, SmartListenerConfigurationP
 
         listeners.add(smartListenerCfg);
 
-        configs.put(com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class.class, listeners);
+        configs.put(Class.class, listeners);
 
         return configs;
     }
