@@ -27,8 +27,8 @@
         <file from="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/FIBO Ontology Report Generator.docx"
               to="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/FIBO Ontology Report Generator.docx"/>
 
-        <file from="profiles/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/FIBO Profile.mdzip"
-              to="profiles/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/FIBO Profile.mdzip"/>
+        <file from="profiles/fibo/FIBO Profile.mdzip"
+              to="profiles/fibo/FIBO Profile.mdzip"/>
 
         <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/omg-fibo-derivedproperties.jar"
               to="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/omg-fibo-derivedproperties.jar"/>
