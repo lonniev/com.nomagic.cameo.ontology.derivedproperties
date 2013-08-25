@@ -118,7 +118,7 @@
 
     <target name="dist" depends="compile">
 
-        <jar destfile="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"
+        <jar destfile="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/omg-fibo-derivedproperties.jar"
              basedir="${build}" whenmanifestonly="fail"/>
 
         <copy file="${src}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/plugin.xml"
@@ -137,16 +137,20 @@
         <copy file="${src}/data/defaults/data/diagrams/OWL Business Diagram/descriptor.xml"
               todir="${dist}/data/defaults/data/diagrams/OWL Business Diagram"/>
 
-        <copydir src="${src}/data/defaults/data/reports" dest="${dist}/data/defaults/data/reports"/>
-        <copydir src="${src}/data/profiles" dest="${dist}/data/profiles"/>
+        <copy todir="${dist}/data/defaults/data/reports">
+            <fileset dir="${src}/data/defaults/data/reports"/>
+        </copy>
+        <copy todir="${dist}/profiles">
+            <fileset dir="${src}/profiles"/>
+        </copy>
 
-        <zip destfile="derivedproperties-plugin.zip" basedir="${dist}"/>
+        <zip destfile="omg-fibo-derivedproperties-plugin.zip" basedir="${dist}"/>
 
     </target>
 
     <target name="debug-dist" depends="debug-compile">
 
-        <jar destfile="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"
+        <jar destfile="${dist}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/omg-fibo-derivedproperties.jar"
              basedir="${build}" whenmanifestonly="fail"/>
 
         <copy file="${src}/plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/plugin.xml"
@@ -165,10 +169,14 @@
         <copy file="${src}/data/defaults/data/diagrams/OWL Business Diagram/descriptor.xml"
               todir="${dist}/data/defaults/data/diagrams/OWL Business Diagram"/>
 
-        <copydir src="${src}/data/defaults/data/reports" dest="${dist}/data/defaults/data/reports"/>
-        <copydir src="${src}/data/profiles" dest="${dist}/data/profiles"/>
+        <copy todir="${dist}/data/defaults/data/reports">
+            <fileset dir="${src}/data/defaults/data/reports"/>
+        </copy>
+        <copy todir="${dist}/profiles">
+            <fileset dir="${src}/profiles"/>
+        </copy>
 
-        <zip destfile="derivedproperties-plugin.zip" basedir="${dist}"/>
+        <zip destfile="omg-fibo-derivedproperties-plugin.zip" basedir="${dist}"/>
 
     </target>
 

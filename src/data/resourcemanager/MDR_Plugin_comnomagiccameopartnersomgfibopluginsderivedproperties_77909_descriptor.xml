@@ -5,7 +5,7 @@
         description="OMG FIBO's Derived Properties Plugin 1, Provider Name: Lonnie VanZandt."
         group="Ontology Capabilities"
         homePage="www.nomagic.com"
-        id="77909" mdVersionMax="higher" mdVersionMin="17.0.3"
+        id="77909" mdVersionMax="higher" mdVersionMin="17.0.4"
         name="FIBO Derived Properties"
         product="comnomagiccameopartnersomgfibopluginsderivedproperties"
         restartMagicdraw="false"
@@ -20,15 +20,22 @@
 
         <file from="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/reports/Default.xml"
               to="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/reports/Default.xml"/>
+
         <file from="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/template.xml"
               to="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/template.xml"/>
+
         <file from="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/FIBO Ontology Report Generator.docx"
               to="data/defaults/data/reports/FIBO Ontology Specification from VOM ODM/FIBO Ontology Report Generator.docx"/>
 
-        <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"
-              to="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/derivedproperties.jar"/>
+        <file from="profiles/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/FIBO Profile.mdzip"
+              to="profiles/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/FIBO Profile.mdzip"/>
+
+        <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/omg-fibo-derivedproperties.jar"
+              to="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/omg-fibo-derivedproperties.jar"/>
+
         <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/lib/guava-14.0.1.jar"
               to="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/lib/guava-14.0.1.jar"/>
+
         <file from="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/plugin.xml"
               to="plugins/com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties/plugin.xml"/>
     </installation>
