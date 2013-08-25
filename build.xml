@@ -138,6 +138,7 @@
               todir="${dist}/data/defaults/data/diagrams/OWL Business Diagram"/>
 
         <copydir src="${src}/data/defaults/data/reports" dest="${dist}/data/defaults/data/reports"/>
+        <copydir src="${src}/data/profiles" dest="${dist}/data/profiles"/>
 
         <zip destfile="derivedproperties-plugin.zip" basedir="${dist}"/>
 
@@ -165,6 +166,7 @@
               todir="${dist}/data/defaults/data/diagrams/OWL Business Diagram"/>
 
         <copydir src="${src}/data/defaults/data/reports" dest="${dist}/data/defaults/data/reports"/>
+        <copydir src="${src}/data/profiles" dest="${dist}/data/profiles"/>
 
         <zip destfile="derivedproperties-plugin.zip" basedir="${dist}"/>
 
