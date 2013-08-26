@@ -96,7 +96,17 @@ public class FactPredicateByNameFinder
 
         public boolean apply (final DirectedRelationship dr)
         {
-            return dr.getHumanName().startsWith(name);
+            if (null != dr)
+            {
+                final String drName = dr.getHumanName();
+
+                if (null != drName)
+                {
+                    return drName.trim().equalsIgnoreCase(name);
+                }
+            }
+
+            return false;
         }
     }
 
@@ -111,10 +121,22 @@ public class FactPredicateByNameFinder
 
         public boolean apply (final DirectedRelationship dr)
         {
+            if (null != dr)
+            {
+                final Element supplier = ModelHelper.getSupplierElement(dr);
 
-            Element supplier = ModelHelper.getSupplierElement(dr);
+                if (null != supplier)
+                {
+                    final String supplierName = supplier.getHumanName();
 
-            return (null != supplier) && supplier.getHumanName().contains(name);
+                    if (null != supplierName)
+                    {
+                        return supplierName.trim().equalsIgnoreCase(name);
+                    }
+                }
+            }
+
+            return false;
         }
     }
 }

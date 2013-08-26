@@ -51,7 +51,7 @@ public class TermOriginExpression implements Expression, SmartListenerConfigurat
 
             FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlProperty);
 
-            return factPredicateByNameFinder.findInstanceSpecifications("termOrigin");
+            return factPredicateByNameFinder.findInstanceSpecifications("annotationProperty termOrigin");
         } else
         {
             return Lists.newArrayList();

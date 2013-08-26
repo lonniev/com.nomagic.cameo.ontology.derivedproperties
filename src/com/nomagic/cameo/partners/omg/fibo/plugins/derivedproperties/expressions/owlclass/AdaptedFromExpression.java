@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class AdaptedFromExpression implements Expression, SmartListenerConfigurationProvider
 {
-    final String factPredicateName = "adaptedFrom";
+    final String factPredicateName = "annotationProperty adaptedFrom";
 
     /**
      * Returns empty collection if the specified object is not an OWL class.

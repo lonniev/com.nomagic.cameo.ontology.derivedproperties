@@ -49,7 +49,7 @@ public class DefinitionOriginExpression implements Expression, SmartListenerConf
 
             FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlClass);
 
-            return factPredicateByNameFinder.findInstanceSpecifications("definitionOrigin");
+            return factPredicateByNameFinder.findInstanceSpecifications("annotationProperty definitionOrigin");
         } else
         {
             return Lists.newArrayList();

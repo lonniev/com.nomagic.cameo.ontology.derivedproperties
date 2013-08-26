@@ -48,7 +48,7 @@ public class SkosDefinitionExpression implements Expression, SmartListenerConfig
 
             FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlProperty);
 
-            return factPredicateByNameFinder.findInstanceSpecifications("definition");
+            return factPredicateByNameFinder.findInstanceSpecifications("annotationProperty definition");
         } else
         {
             return Lists.newArrayList();

@@ -51,7 +51,7 @@ public class ExplanatoryNoteExpression implements Expression, SmartListenerConfi
 
             FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlClass);
 
-            return factPredicateByNameFinder.findInstanceSpecifications("explanatoryNote");
+            return factPredicateByNameFinder.findInstanceSpecifications("annotationProperty explanatoryNote");
         } else
         {
             return Lists.newArrayList();

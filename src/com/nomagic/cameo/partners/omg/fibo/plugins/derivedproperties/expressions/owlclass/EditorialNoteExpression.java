@@ -51,7 +51,7 @@ public class EditorialNoteExpression implements Expression, SmartListenerConfigu
 
             FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlClass);
 
-            return factPredicateByNameFinder.findInstanceSpecifications("editorialNote");
+            return factPredicateByNameFinder.findInstanceSpecifications("annotationProperty editorialNote");
         } else
         {
             return Lists.newArrayList();
