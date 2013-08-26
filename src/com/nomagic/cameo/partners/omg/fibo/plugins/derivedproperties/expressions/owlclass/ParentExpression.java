@@ -57,22 +57,22 @@ public class ParentExpression implements Expression, SmartListenerConfigurationP
 
             StereotypedRelationByNameFinder<Class> relationFinder = new StereotypedRelationByNameFinder(owlClass);
 
-            List<DirectedRelationship> subPropertyOfList = relationFinder.findRelationshipWithAppliedStereotypeName
+            List<DirectedRelationship> subClassOfList = relationFinder.findRelationshipWithAppliedStereotypeName
                     ("subClassOf", RelationshipDirection.AwayFrom);
 
             // collect all the supertype classes of which this class is a subtype
-            for (DirectedRelationship subTypeOfRel : subPropertyOfList)
+            for (DirectedRelationship subClassOfRel : subClassOfList)
             {
-                for (Element target : subTypeOfRel.getTarget())
+                for (Element target : subClassOfRel.getTarget())
                 {
                     if (target instanceof Class)
                     {
                         Class superClass = (Class) target;
 
-                        StereotypedElement<Class> owlProperty = new StereotypedElement<Class>(superClass,
+                        StereotypedElement<Class> superOwlClass = new StereotypedElement<Class>(superClass,
                                 "owlClass");
 
-                        values.addAll(owlProperty.getTagValueValueSpecificationByName("label"));
+                        values.addAll(superOwlClass.getTagValueValueSpecificationByName("label"));
                     }
                 }
             }
