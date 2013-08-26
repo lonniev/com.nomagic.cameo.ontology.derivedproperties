@@ -14,7 +14,7 @@ import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Association;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
 
 import javax.annotation.CheckForNull;
@@ -47,9 +47,9 @@ public class ExplanatoryNoteExpression implements Expression, SmartListenerConfi
         if (object instanceof com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class)
         {
 
-            final Association owlProperty = (Association) object;
+            final Class owlClass = (Class) object;
 
-            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlProperty);
+            FactPredicateByNameFinder factPredicateByNameFinder = new FactPredicateByNameFinder(owlClass);
 
             return factPredicateByNameFinder.findInstanceSpecifications("explanatoryNote");
         } else
@@ -66,7 +66,7 @@ public class ExplanatoryNoteExpression implements Expression, SmartListenerConfi
      * will be recalculated when one or more of these properties change.
      */
     @Override
-    public Map<Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
+    public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
         return FactPredicateListenerConfigFactory.getListenerConfigurations();
     }
