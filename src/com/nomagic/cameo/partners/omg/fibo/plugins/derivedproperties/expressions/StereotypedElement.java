@@ -17,28 +17,31 @@ import java.util.List;
  */
 public class StereotypedElement<UnadornedType extends Element>
 {
-    protected final UnadornedType unadornedElement;
-    protected final String stereotypeName;
+    protected final Optional<UnadornedType> unadornedElement;
+    protected final Optional<String> stereotypeName;
 
     public StereotypedElement (UnadornedType unadornedElement, String stereotypeName)
     {
-        this.unadornedElement = unadornedElement;
-        this.stereotypeName = stereotypeName;
+        this.unadornedElement = Optional.fromNullable(unadornedElement);
+        this.stereotypeName = Optional.fromNullable(stereotypeName);
     }
 
     public List<ValueSpecification> getTagValueValueSpecificationByName (String propertyName)
     {
-        Optional<Property> stereoProperty = Optional.fromNullable(StereotypesHelper.findStereotypePropertyFor
-                (unadornedElement, propertyName));
-
-        if (stereoProperty.isPresent())
+        if (unadornedElement.isPresent())
         {
-            Optional<Slot> slot = Optional.fromNullable(StereotypesHelper.getSlot(unadornedElement,
-                    stereoProperty.get(), false));
+            Optional<Property> stereoProperty = Optional.fromNullable(StereotypesHelper.findStereotypePropertyFor
+                    (unadornedElement.get(), propertyName));
 
-            if (slot.isPresent())
+            if (stereoProperty.isPresent())
             {
-                return slot.get().getValue();
+                Optional<Slot> slot = Optional.fromNullable(StereotypesHelper.getSlot(unadornedElement.get(),
+                        stereoProperty.get(), false));
+
+                if (slot.isPresent())
+                {
+                    return slot.get().getValue();
+                }
             }
         }
 

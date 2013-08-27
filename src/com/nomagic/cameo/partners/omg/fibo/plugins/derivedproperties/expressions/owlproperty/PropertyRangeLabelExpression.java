@@ -1,5 +1,6 @@
 package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.owlproperty;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -63,14 +64,17 @@ public class PropertyRangeLabelExpression implements Expression, SmartListenerCo
                         // (otherwise it references the domain thereof)
 
                         // then obtain its Type because that is the range of the owlProperty
-                        Type rangeType = assocProperty.getType();
+                        Optional<Type> rangeType = Optional.fromNullable(assocProperty.getType());
 
                         // give this Type the nature of a Labeled Resource
-                        final StereotypedElement<Type> rangeOwlProperty = new StereotypedElement<Type>(rangeType,
+                        if (rangeType.isPresent())
+                        {
+                        final StereotypedElement<Type> rangeOwlProperty = new StereotypedElement<Type>(rangeType.get(),
                                 "labeledResource");
 
                         // add all the labels this labeled resource may have
                         values.addAll(rangeOwlProperty.getTagValueValueSpecificationByName("label"));
+                        }
                     }
                 }
             }
