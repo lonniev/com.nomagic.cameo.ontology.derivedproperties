@@ -2,6 +2,7 @@ package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expression
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedElement;
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
@@ -38,11 +39,11 @@ public class PropertyDomainExpression implements Expression, SmartListenerConfig
 
         if (object instanceof Class)
         {
-
             final Class owlClass = (Class) object;
 
-            // use the owner as the property domain for the Class for now
-            values.add(owlClass.getOwner());
+            final StereotypedElement<Class> domainClass = new StereotypedElement<Class>(owlClass, "owlClass");
+
+            values.addAll(domainClass.getTagValueValueSpecificationByName("label"));
         }
 
         return values;

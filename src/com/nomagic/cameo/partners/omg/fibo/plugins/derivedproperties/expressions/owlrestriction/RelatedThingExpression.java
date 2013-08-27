@@ -26,6 +26,7 @@ import java.util.Map;
  */
 public class RelatedThingExpression implements Expression, SmartListenerConfigurationProvider
 {
+
     /**
      * Returns an empty collection if the specified object is not an OWL Restriction Class. If
      * the specified object is an OWL Restriction Class then it returns the set of Types in the Range of
