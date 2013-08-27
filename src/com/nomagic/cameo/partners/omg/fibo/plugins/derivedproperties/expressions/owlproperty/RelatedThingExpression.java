@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * User: lvanzandt
- * Date: 7/24/13
+ * Date: 8/27/13
  * Time: 8:59 AM
  */
 public class RelatedThingExpression implements Expression, SmartListenerConfigurationProvider
