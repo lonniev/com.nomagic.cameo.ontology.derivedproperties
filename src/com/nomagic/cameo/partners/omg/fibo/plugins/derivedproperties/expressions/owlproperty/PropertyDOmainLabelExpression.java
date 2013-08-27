@@ -1,11 +1,11 @@
 package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.owlproperty;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedElement;
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
-import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.*;
@@ -28,7 +28,7 @@ public class PropertyDomainLabelExpression implements Expression, SmartListenerC
 {
     /**
      * Returns an empty collection if the specified object is not an OWL Property Association. If
-     * the specified object is an OWL Property then it returns the set of Types in the DOmain of
+     * the specified object is an OWL Property then it returns the set of Types in the Domain of
      * the Property.
      *
      * @param object the context Element from the current MD model.
@@ -44,30 +44,29 @@ public class PropertyDomainLabelExpression implements Expression, SmartListenerC
 
             final Association owlProperty = (Association) object;
 
-            // only return a collection if the owlProperty is specifically a datatypeProperty
-            if (StereotypesHelper.isElementStereotypedBy(owlProperty, "datatypeProperty"))
+            // get the set of roles (MemberEnds) of this Association(Class)
+            ImmutableList<Property> assocProperties = ImmutableList.copyOf(owlProperty.getMemberEnd());
+
+            // a well-formed UML and ODM-compliant model should return a collection with only 2 members
+
+            for (Property assocProperty : assocProperties)
             {
-                // get the set of roles (MemberEnds) of this Association(Class)
-                ImmutableList<Property> assocProperties = ImmutableList.copyOf(owlProperty.getMemberEnd());
 
-                // a well-formed UML and ODM-compliant model should return a collection with only 2 members
-
-                for (Property assocProperty : assocProperties)
+                // if the property cannot be reached from this owlProperty
+                if (!assocProperty.isNavigable())
                 {
+                    // according to the ODM Specification, version 1, if the property is
+                    // navigable from the owner then it references the range of the owlProperty
+                    // (otherwise it references the domain thereof)
 
-                    // if the property cannot be reached from this owlProperty
-                    if (!assocProperty.isNavigable())
+                    // then obtain its Type because that is the domain of the owlProperty
+                    Optional<Type> domainType = Optional.fromNullable(assocProperty.getType());
+
+                    // give this Type the nature of a Labeled Resource
+                    if (domainType.isPresent())
                     {
-                        // according to the ODM Specification, version 1, if the property is
-                        // navigable from the owner then it references the range of the owlProperty
-                        // (otherwise it references the domain thereof)
-
-                        // then obtain its Type because that is the domain of the owlProperty
-                        Type domainType = assocProperty.getType();
-
-                        // give this Type the nature of a Labeled Resource
-                        final StereotypedElement<Type> domainOwlProperty = new StereotypedElement<Type>(domainType,
-                                "labeledResource");
+                        final StereotypedElement<Type> domainOwlProperty = new StereotypedElement<Type>(domainType
+                                .get(), "labeledResource");
 
                         // add all the labels this labeled resource may have
                         values.addAll(domainOwlProperty.getTagValueValueSpecificationByName("label"));
