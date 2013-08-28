@@ -3,7 +3,7 @@ package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expression
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.SlotNameAndValueListenerConfigFactory;
 import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedElement;
 import com.nomagic.magicdraw.core.Application;
 import com.nomagic.magicdraw.uml.ElementFinder;
@@ -12,7 +12,6 @@ import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.*;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
-import com.nomagic.uml2.impl.PropertyNames;
 
 import javax.annotation.CheckForNull;
 import javax.jmi.reflect.RefObject;
@@ -110,22 +109,6 @@ public class RelatedThingExpression implements Expression, SmartListenerConfigur
     @Override
     public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
-        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs = Maps.newHashMap();
-
-        Collection<SmartListenerConfig> listeners = Lists.newArrayList();
-        SmartListenerConfig smartListenerCfg = new SmartListenerConfig();
-
-        // if the Slot Names or Slot Values of the association change
-        smartListenerCfg.listenTo(PropertyNames.SLOT);
-
-        listeners.add(smartListenerCfg);
-
-        smartListenerCfg.listenToNested(PropertyNames.SLOT).listenTo(PropertyNames.VALUE);
-
-        listeners.add(smartListenerCfg);
-
-        configs.put(Class.class, listeners);
-
-        return configs;
+        return SlotNameAndValueListenerConfigFactory.getListenerConfigurations();
     }
 }

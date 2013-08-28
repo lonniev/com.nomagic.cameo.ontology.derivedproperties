@@ -1,14 +1,13 @@
 package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.owlrestriction;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.SlotNameAndValueListenerConfigFactory;
 import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedElement;
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
-import com.nomagic.uml2.impl.PropertyNames;
 
 import javax.annotation.CheckForNull;
 import javax.jmi.reflect.RefObject;
@@ -58,18 +57,6 @@ public class LabelExpression implements Expression, SmartListenerConfigurationPr
     @Override
     public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
-        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs = Maps.newHashMap();
-
-        Collection<SmartListenerConfig> listeners = Lists.newArrayList();
-        SmartListenerConfig smartListenerCfg = new SmartListenerConfig();
-
-        // if the name of the element changes
-        smartListenerCfg.listenTo(PropertyNames.NAME);
-
-        listeners.add(smartListenerCfg);
-
-        configs.put(Class.class, listeners);
-
-        return configs;
+        return SlotNameAndValueListenerConfigFactory.getListenerConfigurations();
     }
 }

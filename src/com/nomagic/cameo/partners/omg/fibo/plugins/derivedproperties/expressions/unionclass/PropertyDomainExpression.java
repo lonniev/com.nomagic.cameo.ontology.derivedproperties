@@ -1,13 +1,14 @@
-package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.owlclass;
+package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.unionclass;
 
 import com.google.common.collect.Lists;
-import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.SlotNameAndValueListenerConfigFactory;
+import com.google.common.collect.Maps;
 import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedElement;
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Element;
+import com.nomagic.uml2.impl.PropertyNames;
 
 import javax.annotation.CheckForNull;
 import javax.jmi.reflect.RefObject;
@@ -15,33 +16,34 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * User: lvanzandt
- * Date: 8/19/13
- * Time: 3:56 PM
+ * Date: 7/24/13
+ * Time: 8:59 AM
  */
-public class LabelExpression implements Expression, SmartListenerConfigurationProvider
+public class PropertyDomainExpression implements Expression, SmartListenerConfigurationProvider
 {
     /**
-     * Returns empty collection if the specified object is not an AssociationClass.
-     * If the specified object is an AssociationClass then it returns a collection
-     * of the rdf Labels of the Parents for the element.
+     * Returns an empty collection if the specified object is not an OWL Restriction Class. If
+     * the specified object is an OWL Restriction Class then it returns the set of Types in the Domain of
+     * the Property.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of Parent.
+     * @return collection of [0..1] related OWL Restriction Class Types of the Domain.
      */
     @Override
     public Object getValue (@CheckForNull RefObject object)
     {
-        List<Object> values = Lists.newArrayList();
+        List<Element> values = Lists.newArrayList();
 
         if (object instanceof Class)
         {
             final Class owlClass = (Class) object;
 
-            final StereotypedElement<Class> owlProperty = new StereotypedElement<Class>(owlClass, "owlClass");
+            final StereotypedElement<Class> domainClass = new StereotypedElement<Class>(owlClass, "owlClass");
 
-            values.addAll(owlProperty.getTagValueValueSpecificationByName("label"));
+            values.addAll(domainClass.getTagValueValueSpecificationByName("label"));
         }
 
         return values;
@@ -57,6 +59,18 @@ public class LabelExpression implements Expression, SmartListenerConfigurationPr
     @Override
     public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
-        return SlotNameAndValueListenerConfigFactory.getListenerConfigurations();
+        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs = Maps.newHashMap();
+
+        Collection<SmartListenerConfig> listeners = Lists.newArrayList();
+        SmartListenerConfig smartListenerCfg = new SmartListenerConfig();
+
+        // if the Roles of the association change
+        smartListenerCfg.listenTo(PropertyNames.ROLE);
+
+        listeners.add(smartListenerCfg);
+
+        configs.put(Class.class, listeners);
+
+        return configs;
     }
 }

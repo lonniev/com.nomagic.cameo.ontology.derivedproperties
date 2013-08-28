@@ -1,4 +1,4 @@
-package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.owlclass;
+package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.unionclass;
 
 import com.google.common.collect.Lists;
 import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.SlotNameAndValueListenerConfigFactory;

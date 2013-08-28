@@ -1,15 +1,16 @@
-package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.owlrestriction;
+package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.unionclass;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.SlotNameAndValueListenerConfigFactory;
+import com.google.common.collect.Maps;
 import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.StereotypedElement;
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
 import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
-import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.*;
+import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
+import com.nomagic.uml2.impl.PropertyNames;
 
 import javax.annotation.CheckForNull;
 import javax.jmi.reflect.RefObject;
@@ -23,13 +24,12 @@ import java.util.Map;
  * Date: 7/24/13
  * Time: 8:59 AM
  */
-public class RelatedThingExpression implements Expression, SmartListenerConfigurationProvider
+public class PropertyRangeLabelExpression implements Expression, SmartListenerConfigurationProvider
 {
-
     /**
-     * Returns an empty collection if the specified object is not an OWL Restriction Class. If
-     * the specified object is an OWL Restriction Class then it returns the set of Types in the Range of
-     * the Class.
+     * Returns an empty collection if the specified object is not an OWL Property Association. If
+     * the specified object is an OWL Property then it returns the set of Types in the Range of
+     * the Property.
      *
      * @param object the context Element from the current MD model.
      * @return collection of [0..1] related OWL Restriction Class Types of the Range.
@@ -39,30 +39,30 @@ public class RelatedThingExpression implements Expression, SmartListenerConfigur
     {
         List<ValueSpecification> values = Lists.newArrayList();
 
-        if (object instanceof Class)
+        if (object instanceof Association)
         {
 
-            final Class owlClass = (Class) object;
+            final Association owlProperty = (Association) object;
 
-            // only return a collection if the owlClass is specifically a owlClass
-            if (StereotypesHelper.isElementStereotypedBy(owlClass, "owlClass"))
+            // only return a collection if the owlProperty is specifically a datatypeProperty
+            if (StereotypesHelper.isElementStereotypedBy(owlProperty, "datatypeProperty"))
             {
                 // get the set of roles (MemberEnds) of this Association(Class)
-                ImmutableList<Property> assocProperties = ImmutableList.of();
+                ImmutableList<Property> assocProperties = ImmutableList.copyOf(owlProperty.getMemberEnd());
 
                 // a well-formed UML and ODM-compliant model should return a collection with only 2 members
 
                 for (Property assocProperty : assocProperties)
                 {
 
-                    // if the property can be reached from this owlClass
+                    // if the property can be reached from this owlProperty
                     if (assocProperty.isNavigable())
                     {
                         // according to the ODM Specification, version 1, if the property is
-                        // navigable from the owner then it references the range of the owlClass
+                        // navigable from the owner then it references the range of the owlProperty
                         // (otherwise it references the domain thereof)
 
-                        // then obtain its Type because that is the range of the owlClass
+                        // then obtain its Type because that is the range of the owlProperty
                         Type rangeType = assocProperty.getType();
 
                         // give this Type the nature of a Labeled Resource
@@ -89,6 +89,18 @@ public class RelatedThingExpression implements Expression, SmartListenerConfigur
     @Override
     public Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> getListenerConfigurations ()
     {
-        return SlotNameAndValueListenerConfigFactory.getListenerConfigurations();
+        Map<java.lang.Class<? extends Element>, Collection<SmartListenerConfig>> configs = Maps.newHashMap();
+
+        Collection<SmartListenerConfig> listeners = Lists.newArrayList();
+        SmartListenerConfig smartListenerCfg = new SmartListenerConfig();
+
+        // if the Roles of the association change
+        smartListenerCfg.listenTo(PropertyNames.ROLE);
+
+        listeners.add(smartListenerCfg);
+
+        configs.put(Class.class, listeners);
+
+        return configs;
     }
 }

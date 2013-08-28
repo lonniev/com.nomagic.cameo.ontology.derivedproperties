@@ -1,4 +1,4 @@
-package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.owlrestriction;
+package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.unionclass;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
