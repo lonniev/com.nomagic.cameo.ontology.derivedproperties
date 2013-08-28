@@ -44,7 +44,7 @@ public class DisjointWithExpression implements Expression, SmartListenerConfigur
         {
             final Class owlClass = (Class) object;
 
-             StereotypedRelationByNameFinder<Class> relationFinder = new StereotypedRelationByNameFinder(owlClass);
+            StereotypedRelationByNameFinder<Class> relationFinder = new StereotypedRelationByNameFinder(owlClass);
 
             List<DirectedRelationship> disjointWithRels = relationFinder.findRelationshipWithAppliedStereotypeName
                     ("disjointWith", RelationshipDirection.Both);

@@ -49,17 +49,21 @@ public class InversePropertyLabelExpression implements Expression, SmartListener
 
             ImmutableList<DirectedRelationship> inverseOfRelations = ImmutableList.copyOf(relationFinder
                     .findRelationshipWithAppliedStereotypeName("inverseOf", StereotypedRelationByNameFinder
-                            .RelationshipDirection.AwayFrom));
+                            .RelationshipDirection.Both));
 
             // for each such inverseOf relationship (of which there should be only at most one)
             for (DirectedRelationship inverseRel : inverseOfRelations)
             {
+                // get the set of both ends
+                List<Element> endElements = Lists.newArrayList(inverseRel.getTarget());
+                endElements.addAll(inverseRel.getSource());
+
                 // for each of the targets of this inverse relationship
-                for (Element target : inverseRel.getTarget())
+                for (Element endElement : endElements)
                 {
-                    if (target instanceof Association)
+                    if ((endElement instanceof Association) && (endElement != owlProperty))
                     {
-                        final Association inverseAssociation = (Association) target;
+                        final Association inverseAssociation = (Association) endElement;
 
                         final StereotypedElement<Association> inverseOwlProperty = new
                                 StereotypedElement<Association>(inverseAssociation, "labeledResource");
