@@ -115,8 +115,12 @@ public class RelatedThingExpression implements Expression, SmartListenerConfigur
         Collection<SmartListenerConfig> listeners = Lists.newArrayList();
         SmartListenerConfig smartListenerCfg = new SmartListenerConfig();
 
-        // if the Roles of the association change
-        smartListenerCfg.listenTo(PropertyNames.ROLE);
+        // if the Slot Names or Slot Values of the association change
+        smartListenerCfg.listenTo(PropertyNames.SLOT);
+
+        listeners.add(smartListenerCfg);
+
+        smartListenerCfg.listenToNested(PropertyNames.SLOT).listenTo(PropertyNames.VALUE);
 
         listeners.add(smartListenerCfg);
 
