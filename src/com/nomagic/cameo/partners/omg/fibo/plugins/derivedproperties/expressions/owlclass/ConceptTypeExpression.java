@@ -1,12 +1,11 @@
 package com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.owlclass;
 
-import com.google.common.collect.ImmutableMap;
+import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.nomagic.magicdraw.core.Application;
-import com.nomagic.magicdraw.uml.ElementFinder;
+import com.nomagic.cameo.partners.omg.fibo.plugins.derivedproperties.expressions.element
+        .ConceptTermByAppliedStereoFinder;
 import com.nomagic.magicdraw.validation.SmartListenerConfigurationProvider;
-import com.nomagic.uml2.ext.jmi.helpers.StereotypesHelper;
 import com.nomagic.uml2.ext.jmi.reflect.Expression;
 import com.nomagic.uml2.ext.jmi.smartlistener.SmartListenerConfig;
 import com.nomagic.uml2.ext.magicdraw.classes.mdkernel.Class;
@@ -27,13 +26,6 @@ import java.util.Map;
  */
 public class ConceptTypeExpression implements Expression, SmartListenerConfigurationProvider
 {
-    private static final ImmutableMap<String, String> conceptTerms = ImmutableMap.of("owlClass",
-            "Concept Type Owl Class", "objectProperty", "Concept Type Owl Object Property", "datatypeProperty",
-            "Concept Type Owl Datatype Property", "unionOf", "Concept Type Owl UnionOf", "disjoint",
-            "Concept Type Owl Disjoint");
-
-    private static final boolean FindRecursively = true;
-
     /**
      * Returns empty collection if the specified object is not an Class.
      * If the specified object is an OWL Class then it returns a collection
@@ -50,23 +42,11 @@ public class ConceptTypeExpression implements Expression, SmartListenerConfigura
         if (object instanceof Class)
         {
             final Class owlClass = (Class) object;
-            String literalStringName = "Concept Type Owl Other";
 
-            for (String stereoNameKey : conceptTerms.keySet())
-            {
-                if (StereotypesHelper.hasStereotype(owlClass, stereoNameKey))
-                {
-                    literalStringName = conceptTerms.get(stereoNameKey);
-                    break;
-                }
-            }
+            Optional<LiteralString> literalString = ConceptTermByAppliedStereoFinder.findConceptType(Optional.of
+                    (owlClass));
 
-            Element root = Application.getInstance().getProject().getModel();
-
-            LiteralString conceptTypeLiteralString = (LiteralString) ElementFinder.find(root, LiteralString.class,
-                    literalStringName, FindRecursively);
-
-            values.add(conceptTypeLiteralString);
+            values.add(literalString.get());
         }
 
         return values;
@@ -88,7 +68,7 @@ public class ConceptTypeExpression implements Expression, SmartListenerConfigura
         SmartListenerConfig smartListenerCfg = new SmartListenerConfig();
 
         // if the name of the element changes
-        smartListenerCfg.listenTo(PropertyNames.NAME);
+        smartListenerCfg.listenTo(PropertyNames.APPLIED_STEREOTYPE_INSTANCE);
 
         listeners.add(smartListenerCfg);
 
