@@ -26,15 +26,14 @@ import java.util.Map;
  * Date: 7/24/13
  * Time: 8:59 AM
  */
-public class InversePropertyLabelExpression implements Expression, SmartListenerConfigurationProvider
+public class EquivalentOfLabelExpression implements Expression, SmartListenerConfigurationProvider
 {
     /**
      * Returns an empty collection if the specified object is not an OWL Class. If
-     * the specified object is an OWL Class then it returns the set of Types in the Range of
-     * the Property.
+     * the specified object is an OWL Class then it returns the set of Equivalent Classes of the Class.
      *
      * @param object the context Element from the current MD model.
-     * @return collection of [0..1] related OWL Class Types of the Range.
+     * @return collection of [0..1] related equivalent Owl Classes.
      */
     @Override
     public Object getValue (@CheckForNull RefObject object)
@@ -45,33 +44,28 @@ public class InversePropertyLabelExpression implements Expression, SmartListener
         {
             final Class owlClass = (Class) object;
 
-            // look for a relationship away from this element with the stereotype of inverseOf
-            StereotypedRelationByNameFinder<Class> relationFinder = new StereotypedRelationByNameFinder
-                    (owlClass);
+            // look for a relationship away from this element with the stereotype of equivalentClass
+            StereotypedRelationByNameFinder<Class> relationFinder = new StereotypedRelationByNameFinder(owlClass);
 
             ImmutableList<DirectedRelationship> inverseOfRelations = ImmutableList.copyOf(relationFinder
-                    .findRelationshipWithAppliedStereotypeName("inverseOf", StereotypedRelationByNameFinder
-                            .RelationshipDirection.Both));
+                    .findRelationshipWithAppliedStereotypeName("equivalentClass",
+                            StereotypedRelationByNameFinder.RelationshipDirection.AwayFrom));
 
             // for each such inverseOf relationship (of which there should be only at most one)
             for (DirectedRelationship inverseRel : inverseOfRelations)
             {
-                // get the set of both ends
-                List<Element> endElements = Lists.newArrayList(inverseRel.getTarget());
-                endElements.addAll(inverseRel.getSource());
-
                 // for each of the targets of this inverse relationship
-                for (Element endElement : endElements)
+                for (Element target : inverseRel.getTarget())
                 {
-                    if (endElement instanceof Class)
+                    if (target instanceof Class)
                     {
-                        final Class inverseClass = (Class) endElement;
+                        final Class equivClass = (Class) target;
 
-                        final StereotypedElement<Class> inverseOwlClass = new
-                                StereotypedElement<Class>(inverseClass, "labeledResource");
+                        final StereotypedElement<Class> equivOwlClass = new StereotypedElement<Class>(equivClass,
+                                "labeledResource");
 
                         // add all the labels this labeled resource may have
-                        values.addAll(inverseOwlClass.getTagValueValueSpecificationByName("label"));
+                        values.addAll(equivOwlClass.getTagValueValueSpecificationByName("label"));
                     }
                 }
             }
