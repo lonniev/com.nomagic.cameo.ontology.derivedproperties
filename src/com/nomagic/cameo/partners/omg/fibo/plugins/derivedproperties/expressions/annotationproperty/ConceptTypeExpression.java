@@ -27,10 +27,15 @@ import java.util.Map;
  */
 public class ConceptTypeExpression implements Expression, SmartListenerConfigurationProvider
 {
-    private static final ImmutableMap<String, String> conceptTerms = ImmutableMap.of("owlClass",
-            "Concept Type Owl Class", "objectProperty", "Concept Type Owl Object Property", "datatypeProperty",
-            "Concept Type Owl Datatype Property", "unionOf", "Concept Type Owl UnionOf", "disjoint",
-            "Concept Type Owl Disjoint");
+    private static final ImmutableMap<String, String> conceptTerms = new ImmutableMap.Builder<String, String>()
+            .put("owlClass", "Concept Type Owl Class")
+            .put("objectProperty", "Concept Type Owl Object Property")
+            .put("datatypeProperty", "Concept Type Owl Datatype Property")
+            .put("annotationProperty", "Concept Type Owl Annotation Property")
+            .put("unionOf", "Concept Type Owl UnionOf")
+            .put("disjoint", "Concept Type Owl Disjoint")
+            .put("UnionClass", "Concept Type Owl UnionClass")
+            .put("owlRestriction", "Concept Type Owl Restriction").build();
 
     private static final boolean FindRecursively = true;
 
